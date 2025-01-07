@@ -382,18 +382,15 @@ public class projectController {
 	   log.info("productionForm()");
 	   return "productionForm";
    }
-   @GetMapping("getproductionPlanRegister")
-   public String getproductionPlanRegister() throws Exception {
-   	mv = new ModelAndView();
-   	List<CompanyVO> companies = ProjectService.get();
-   	List<ProductVO> products = ProjectService.GetProductList();
-   	String productsJson = new ObjectMapper().writeValueAsString(products);
-   	mv.addObject("products", products);
-   	mv.addObject("productsJson", productsJson);
-   	mv.addObject("companies", companies);
-   	mv.setViewName("orderformregister");
-   	
-   	return mv;	
-   }
-
+	/*
+	 * @GetMapping("getproductionPlanRegister") public String
+	 * getproductionPlanRegister() throws Exception { mv = new ModelAndView();
+	 * List<CompanyVO> companies = ProjectService.get(); List<ProductVO> products =
+	 * ProjectService.GetProductList(); String productsJson = new
+	 * ObjectMapper().writeValueAsString(products); mv.addObject("products",
+	 * products); mv.addObject("productsJson", productsJson);
+	 * mv.addObject("companies", companies); mv.setViewName("orderformregister");
+	 * 
+	 * return mv; }
+	 */
 }
