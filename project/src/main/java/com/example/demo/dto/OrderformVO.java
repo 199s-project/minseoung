@@ -10,6 +10,7 @@ import lombok.Setter;
 @Alias("OrderformVO")
 public class OrderformVO {
 	private int orderform_num;
+	private String orderform_name;
 	private String orderform_stat;
 	private int company_num;
 	private int company_num2;
@@ -17,7 +18,7 @@ public class OrderformVO {
 	private String orderform_regdate;
 	private String orderform_startDate;
 	private String orderform_endDate;
-	private String orderform_name;
+	
 	
 	//orderformDetailVO
 	private int orderdetail_num;
