@@ -23,8 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.dto.CompanyVO;
 import com.example.demo.dto.FileVO;
+import com.example.demo.dto.MemberVO;
 import com.example.demo.dto.OrderformVO;
 import com.example.demo.dto.ProductVO;
+import com.example.demo.dto.ProductionPlanVO;
 import com.example.demo.dto.QuotationVO;
 import com.example.demo.service.ProjectService;
 
@@ -222,16 +224,33 @@ public class ProjectController {
 	    return company;
 	}
 	
-	
+	// for 김민성 ---------------------------
 	
 	
 	// 생산계획서 화면 이동
     @GetMapping("productionPlan")
-    public String productionPlan() {
+    public String productionPlan(Model model) {
+    	List<ProductionPlanVO> list = projectService.productionPlan();
+    	model.addAttribute("productionPlan",list);
  	   log.info("productionPlan()");
  	   return "productionPlan";
     }
-    
+    // 생산계획서 양식
+    @GetMapping("productionForm")
+    public String productionForm() {
+    	mv = new ModelAndView();
+		/* List<MemberVO> member = projectService.getMember(); */	
+    	
+ 	   log.info("productionForm()");
+ 	   return "productionForm";
+    }
+    // 생산 계획서 등록
+    @PostMapping("productionForm")
+    public Map<String,Object>setForm(){
+    	
+    	
+    	return "redirect:productionForm";
+    }
     // 구매계약서 목록 화면 이동
     @GetMapping("purchaseContract")
     public String purchaseContract(Model model) {
@@ -261,6 +280,8 @@ public class ProjectController {
     	log.info("allFormList",list);
         return "allForm";
     }
+    
+    // for 김민성 ------------------------ 
     
     // 구매계약서 등록 화면 이동
     @GetMapping("getOrderformRegister")
@@ -314,12 +335,7 @@ public class ProjectController {
        return ResponseEntity.ok(product);
     }
     
-    
-    
-    
-    
-    
-    
+
     
 
 	

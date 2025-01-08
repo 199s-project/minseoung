@@ -80,25 +80,25 @@
                   <table class="table hover multiple-select-row data-table-export nowrap">
                      <thead>
                         <tr>
-                           <th class="table-plus datatable-nosort">계약서 번호</th>
-                           <th>계약서 종류</th>
-                           <th>계약서 이름</th>
-                           <th>발주 처 명</th>
-                           <th>계약 대상 명</th>
-                           <th>계약일</th>
-                           <th>계약 금액</th>
+                           <th class="table-plus datatable-nosort" width="10%">계약서 번호</th>
+                           <th>작성자 이름</th>
+                           <th>생산 시작일</th>
+                           <th>생산 마감일</th>
+                           <th>물품 명</th>
+                           <th width="5%">수량</th>
+                           <th>작성 시간</th>
                         </tr>
                      </thead>
                      <tbody>
-                        <th:block th:each="form: ${purchaseList}">
+                        <th:block th:each="form,stat: ${productionPlan}">
                            <tr>
-                              <td><th:block th:text="${form.orderform_num}"></th:block></td>
-                              <td><th:block th:text="${form.orderform_stat}"></th:block></td>
-                              <td><th:block th:text="${form.company_num}"></th:block></td>
-                              <td><th:block th:text="${form.orderform_content}"></th:block></td>
-                              <td><th:block th:text="${form.orderform_startdate}"></th:block></td>
-                              <td><th:block th:text="${form.orderform_enddate}"></th:block></td>
-                           <!--    <td><th:block th:text="${form.}"></th:block></td> -->
+                          	  <td><th:block th:text="${stat.size-stat.index}"></th:block></td>
+                              <td><th:block th:text="${form.pd_writer}"></th:block></td>
+                              <td><th:block th:text="${form.pd_startdate"></th:block></td>
+                              <td><th:block th:text="${form.pd_enddate}"></th:block></td>
+                              <td><th:block th:text="${form.plan_name_}"></th:block></td>
+                              <td><th:block th:text="${form.plan_amount}"></th:block></td>
+                              <td><th:block th:text="${form.pd_writedate}"></th:block></td>
                            </tr>
                         </th:block>
                      </tbody>
@@ -108,11 +108,6 @@
             
             <!-- Export Datatable End -->
          </div>
-         
-         
-         
-         
-         
          
          <div class="footer-wrap pd-20 mb-20 card-box">
            we are all 1995's  <a href="" target="_blank">Suit</a>

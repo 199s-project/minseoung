@@ -183,39 +183,35 @@ function deleterow() {
 				<div style="border: 1px solid black; width: 1200px; padding: 60px 120px; margin: 0 auto;">
 				
 				    <div class="title" style="padding: 30px 0 40px 0; font-size: 40px;">생산 계획서</div>
-					<form action="" method="post">
+					<form action="addproductionPlan" method="post">
 					<table class="input-auto-size">
 					    <tr>
 					        <td class="heading-section" width="15%">작성일</td>
-					        <td colspan="3"><input type="date" name="contract_number" size="60"></td>
+					        <td colspan="3"><input type="date"id="pd_writedate" name="pd_writedate"  size="60"></td>
 					    </tr>
 					    <tr>
 					        <td class="heading-section">작성자</td>
-					        <td colspan="3"><input type="text" name="client" size="60"></td>
+					        <td colspan="3"><input type="text" id="pd_writer" name="pd_writer" size="60"></td>
 					    </tr>
 					    <tr>
 					        <td class="heading-section">부서명</td>
-					        <td colspan="3"><select name="member_dept" class="member_dept" onchange="func(this.value)">
-					       <option disabled selected>부서명</option>
-					       <option value="생산">생산</option>
+					        <td colspan="3"><select name="member_dept" class="member_dept"  onchange="func(this.value)">
+					       <option disabled>부서명</option>
+					       <option value="생산" selected>생산</option>
 					       <option value="구매">구매</option>
 					       <option value="관리">관리</option>
 					       <option value="대표">대표</option>
 					       </select><div style="display:none">
-					       <input type="text" name="selectdept" size="60" >
+					       <input type="text" id="pd_dept" name="pd_dept" size="60">
 					       </div></td>
-					    </tr>
-					    <tr>
-					        <td class="heading-section">생산 목적</td>
-					        <td colspan="3"><input type="text" name="contractor" size="60"></td>
 					    </tr>
 					     <tr>
 					        <td class="heading-section" width="15%">생산 시작일</td>
-					        <td colspan="3"><input type="date" name="contract_number" size="60"></td>
+					        <td colspan="3"><input type="date" id="pd_startdate" name="pd_startdate" size="60"></td>
 					    </tr>
 					     <tr>
 					        <td class="heading-section" width="15%">생산 마감일</td>
-					        <td colspan="3"><input type="date" name="contract_number" size="60"></td>
+					        <td colspan="3"><input type="date" id="pd_enddate" name="pd_enddate" size="60"></td>
 					    </tr>
 					</table>
 					
@@ -238,10 +234,13 @@ function deleterow() {
 					</table>
 					
 					<table class="input-auto-size">
-					    
 					    <tr>
-					        <td class="heading-section" style="text-align: center;">비고</td>
-					        <td><textarea name="other_notes" rows="10" style="width: 100%;"></textarea></td>
+					        <td class="heading-section">생산 목적</td>
+					        <td colspan="3"><input type="text" id="pd_production" name="pd_production" size="60"></td>
+					    </tr>
+					    <tr>
+					        <td class="heading-section" >비고</td>
+					        <td > <textarea  id="pd_content" name="pd_content" rows="10" style="width: 100%;"></textarea></td>
 					    </tr>
 					</table>
 					

@@ -17,6 +17,7 @@ import com.example.demo.dto.MemberVO;
 import com.example.demo.dto.OrderformDetailVO;
 import com.example.demo.dto.OrderformVO;
 import com.example.demo.dto.ProductVO;
+import com.example.demo.dto.ProductionPlanVO;
 import com.example.demo.dto.QuotationDetailVO;
 import com.example.demo.dto.QuotationVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -125,7 +126,10 @@ public class ProjectService {
 		log.info("allFormList()");
 		return projectDAO.allFormList();
 	}
-	
+	public List<ProductionPlanVO> productionPlan(){
+		log.info("productionPlan()");
+		return projectDAO.productionPlan();
+	}
 	
 	// 구매계약서 등록 화면 이동
     public ModelAndView getOrderformRegister() throws Exception {
@@ -286,8 +290,7 @@ public class ProjectService {
 	}
 
 
-
-
+	
 
 
  
