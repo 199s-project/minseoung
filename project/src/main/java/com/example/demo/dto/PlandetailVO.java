@@ -12,5 +12,7 @@ public class PlandetailVO {
 	private int plan_num;
 	private int pd_num;
 	private String plan_name;
-	private String plan_amount;
+	private int plan_amount;
+	
+	
 }

@@ -2,6 +2,7 @@ package com.example.demo.Contoller;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.dto.CompanyVO;
 import com.example.demo.dto.FileVO;
 import com.example.demo.dto.OrderformVO;
+import com.example.demo.dto.PlandetailVO;
 import com.example.demo.dto.ProductVO;
 import com.example.demo.dto.ProductionPlanVO;
 import com.example.demo.dto.QuotationVO;
@@ -241,6 +243,35 @@ public class ProjectController {
  	   
  	  log.info("productionForm()");
  	   return "productionForm";
+    }
+ // 생산계획서 폼 upload
+    @PostMapping("/setproductionForm")
+    public String setproductionForm(@RequestParam Map<String,Object>formData,Model model) {
+ 	   
+    	//maxCount 추출
+    	int maxCount = Integer.parseInt((String) formData.get("maxCount"));
+    	
+    	//PlandetailVO
+    	List<PlandetailVO> list = new ArrayList<>();
+    	
+    	for(int i =1; i<=maxCount;i++) {
+    		String itemNameKey = "item_name" + i ; 
+    		String quantityKey = "quantity" + i ;
+    		
+    		if(formData.containsKey(itemNameKey) && formData.containsKey(quantityKey)) {
+    			String itemName = (String) formData.get(itemNameKey);
+    			int quantity = Integer.parseInt((String) formData.get(quantityKey));
+    			
+    			PlandetailVO plan = new PlandetailVO();
+    			plan.setPlan_name(itemName);
+    			plan.setPlan_amount(quantity);
+    			
+    			PlandetailVO.add(plan);
+    		}
+    	}
+    	
+    	
+ 	   return "productionPlan";
     }
     // 구매계약서 목록 화면 이동
     @GetMapping("purchaseContract")
