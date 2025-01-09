@@ -25,6 +25,7 @@ import com.example.demo.dto.CompanyVO;
 import com.example.demo.dto.FileVO;
 import com.example.demo.dto.OrderformVO;
 import com.example.demo.dto.ProductVO;
+import com.example.demo.dto.ProductionPlanVO;
 import com.example.demo.dto.QuotationVO;
 import com.example.demo.service.ProjectService;
 
@@ -225,13 +226,22 @@ public class ProjectController {
 	
 	
 	
-	// 생산계획서 화면 이동
+	// 생산계획서 목록 화면 이동
     @GetMapping("productionPlan")
-    public String productionPlan() {
- 	   log.info("productionPlan()");
+    public String getproductionPlanList(Model model) {
+ 	   
+ 	   List<ProductionPlanVO> list = projectService.getProductionPlanList();
+ 	   model.addAttribute("getProductionPlanList", list);
+ 	  log.info("getProductionPlanList",list);
  	   return "productionPlan";
     }
-    
+	// 생산계획서 폼 이동
+    @GetMapping("productionForm")
+    public String productionForm() {
+ 	   
+ 	  log.info("productionForm()");
+ 	   return "productionForm";
+    }
     // 구매계약서 목록 화면 이동
     @GetMapping("purchaseContract")
     public String purchaseContract(Model model) {

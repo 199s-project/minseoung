@@ -17,6 +17,7 @@ import com.example.demo.dto.MemberVO;
 import com.example.demo.dto.OrderformDetailVO;
 import com.example.demo.dto.OrderformVO;
 import com.example.demo.dto.ProductVO;
+import com.example.demo.dto.ProductionPlanVO;
 import com.example.demo.dto.QuotationDetailVO;
 import com.example.demo.dto.QuotationVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -283,6 +284,12 @@ public class ProjectService {
   
 	public ProductVO getProductByProductName(String product_name) {
 		return projectDAO.getProductByProductName(product_name);
+	}
+
+	public List<ProductionPlanVO> getProductionPlanList() {
+		// TODO Auto-generated method stub
+		log.info("getProductionPlanList()");
+		return projectDAO.getProductionPlanList();
 	}
 
 

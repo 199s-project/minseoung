@@ -74,8 +74,6 @@
 	    GROUP BY 
 	        orderform.orderform_num;
 	</select> 
-	
-	
 	<!-- 물품 판매 리스트 -->
 	<select id="quotationList" resultType="QuotationVO">
 	   SELECT 
@@ -110,7 +108,9 @@
 	           orderform.orderform_num;
 	</select>
 	
-	
+	<select id="getProductionPlanList" resultType="ProductionPlanVO">
+	select * from productionplan;
+	</select>
 	
 
 	

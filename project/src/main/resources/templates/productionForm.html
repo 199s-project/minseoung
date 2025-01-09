@@ -116,6 +116,7 @@ var count = 2;
 function addrow() {
 	
 	const elem = document.createElement("tr");
+	
 	elem.classList.add('added-row'+count);
 	elem.innerHTML = `
         <td class="rownum">`+count+`</td>
@@ -205,10 +206,7 @@ function deleterow() {
 					       <input type="text" name="selectdept" size="60" >
 					       </div></td>
 					    </tr>
-					    <tr>
-					        <td class="heading-section">생산 목적</td>
-					        <td colspan="3"><input type="text" name="contractor" size="60"></td>
-					    </tr>
+					   
 					     <tr>
 					        <td class="heading-section" width="15%">생산 시작일</td>
 					        <td colspan="3"><input type="date" name="contract_number" size="60"></td>
@@ -238,7 +236,10 @@ function deleterow() {
 					</table>
 					
 					<table class="input-auto-size">
-					    
+					     <tr>
+					        <td class="heading-section">생산 목적</td>
+					        <td colspan="3"><input type="text" name="contractor" size="60"></td>
+					    </tr>
 					    <tr>
 					        <td class="heading-section" style="text-align: center;">비고</td>
 					        <td><textarea name="other_notes" rows="10" style="width: 100%;"></textarea></td>
