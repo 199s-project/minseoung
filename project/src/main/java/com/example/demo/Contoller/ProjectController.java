@@ -2,9 +2,13 @@ package com.example.demo.Contoller;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -239,22 +243,71 @@ public class ProjectController {
     @GetMapping("productionForm")
     public String productionForm() {
     	mv = new ModelAndView();
-		/* List<MemberVO> member = projectService.getMember(); */	
     	
  	   log.info("productionForm()");
  	   return "productionForm";
     }
-    // 생산 계획서 등록
-    @PostMapping("productionForm")
-    public Map<String,Object>setForm(){
-    	
-    	
-    	return "redirect:productionForm";
+ // 생산 계획서 등록
+    @PostMapping("addproductionForm")
+    public ModelAndView addproductionForm(
+            @RequestParam Map<String, Object> map, 
+            @RequestParam(value = "count", defaultValue = "1") int count) {
+        
+        ModelAndView mv = new ModelAndView();
+        log.info("addproductionForm() - 입력 데이터: {}", map);
+
+        // 데이터를 담을 리스트 생성
+        List<Map<String, Object>> dataList = new ArrayList<>();
+
+        // 정규식을 통해 데이터를 파싱 및 추출
+        for (int i = 0; i < count; i++) {
+            // 가상의 키 이름 생성
+            String a = "rownum[" + i + "].plan_num"; // row 번호
+            String b = "item_name[" + i + "].plan_name"; // 아이템 이름
+            String c = "row[" + i + "].plan_amount"; // 생산 계획 수량
+
+            // 정규식으로 값 추출
+            Pattern pattern = Pattern.compile("\\[(\\d+)]");
+            int a1 = 0, c1 = 0;
+
+            Matcher matcherA = pattern.matcher(a);
+            if (matcherA.find()) {
+                a1 = Integer.parseInt(matcherA.group(1)); // `a`에서 숫자 추출
+            }
+
+            Matcher matcherC = pattern.matcher(c);
+            if (matcherC.find()) {
+                c1 = Integer.parseInt(matcherC.group(1)); // `c`에서 숫자 추출
+            }
+
+            // 추출된 데이터를 Map에 저장
+            Map<String, Object> map1 = new HashMap<>();
+            map1.put("plan_num", a1); // 계획 번호
+            map1.put("plan_name", map.get(b)); // `b` 값은 map에서 가져옴
+            map1.put("plan_amount", map.get(c)); // `c` 값은 map에서 가져옴
+
+            // 리스트에 추가
+            dataList.add(map1);
+        }
+
+        // 추출된 데이터를 확인
+        log.info("추출된 데이터: {}", dataList);
+
+        // 데이터를 서비스 레이어로 전달하여 저장
+        try {
+            projectService.setproductionPlan(dataList); // 서비스 호출
+            mv.addObject("message", "생산 계획서가 성공적으로 등록되었습니다.");
+        } catch (Exception e) {
+            log.error("생산 계획서 등록 중 오류 발생", e);
+            mv.addObject("message", "생산 계획서 등록 중 오류가 발생했습니다.");
+        }
+
+        mv.setViewName("redirect:/production/list"); // 성공 시 이동할 페이지
+        return mv;
     }
     // 구매계약서 목록 화면 이동
     @GetMapping("purchaseContract")
     public String purchaseContract(Model model) {
- 	   
     	List<OrderformVO> list = projectService.orderList();
         model.addAttribute("orderList", list);
         log.info("list",list);

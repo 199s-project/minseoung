@@ -191,12 +191,12 @@
 	select * from productionplan , plandetail where productionplan.pd_num = plandetail.pd_num;
 	</select>
 	
-	<insert id="addproductionPlan" parameterType="ProductionPlanVO">
-		INSERT INTO productionplan (pd_writedate,pd_writer,pd_dept,pd_startdate,pd_enddate,pd_production,pd_content)
-        VALUES (#{pd_writedate}, #{pd_writer}, #{pd_dept}, #{pd_startdate}, #{pd_enddate}, #{pd_production},#{pd_content})
+	<insert id="addproductionForm" parameterType="ProductionPlanVO">
+		INSERT INTO productionplan (pd_writer,pd_dept,pd_startdate,pd_enddate,pd_production,pd_content)
+        VALUES (#{pd_writer}, #{pd_dept}, #{pd_startdate}, #{pd_enddate}, #{pd_production},#{pd_content})
 	</insert>
 
-	<insert id="addproductiondetail" parameterType="PlandetailVO">
+	<insert id="addFormdetail" parameterType="PlandetailVO">
 		INSERT INTO plandetail (pd_num,plan_name,plan_amount)
         VALUES (#{pd_num}, #{plan_name}, #{plan_amount})
 	</insert>

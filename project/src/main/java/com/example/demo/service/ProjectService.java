@@ -151,7 +151,7 @@ public class ProjectService {
     	CompanyVO company1 = projectDAO.getCompanyByCompanyName((String)map.get("company1"));
     	CompanyVO company2 = projectDAO.getCompanyByCompanyName((String)map.get("company2"));
     	
-    	
+    	System.out.println(map);
     	OrderformVO orderformVO = new OrderformVO();
     	orderformVO.setOrderform_name((String)map.get("orderform_name"));
     	orderformVO.setOrderform_stat((String)map.get("orderform_stat"));
@@ -202,7 +202,7 @@ public class ProjectService {
     	}
     	
     	
-    	mv.setViewName("orderformDetail");
+    	mv.setViewName("orderformRegister");
     	return mv;
     }
     
@@ -288,6 +288,13 @@ public class ProjectService {
 	public ProductVO getProductByProductName(String product_name) {
 		return projectDAO.getProductByProductName(product_name);
 	}
+
+	public void setproductionPlan(List<Map<String, Object>> dataList) {
+		// TODO Auto-generated method stub
+		return projectDAO.setproductionPlan(dataList);
+	}
+
+
 
 
 	

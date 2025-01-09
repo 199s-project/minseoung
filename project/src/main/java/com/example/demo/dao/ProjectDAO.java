@@ -72,6 +72,12 @@ public interface ProjectDAO {
 
 	List<ProductionPlanVO> productionPlan();
 
+	int addproductionForm(ProductionPlanVO productionPlanVO);
+
+	void insertproductionPlan(Map<String,Object> map);
+
+	
+
 	
 	/* List<MemberVO> getMember(); */
 	
