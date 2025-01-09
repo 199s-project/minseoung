@@ -250,14 +250,15 @@ public class ProjectController {
  	   
     	//maxCount 추출
     	int maxCount = Integer.parseInt((String) formData.get("maxCount"));
-    	
+    	//나머지애들은 여기다 먼저 빼서 넣어
     	//PlandetailVO
     	List<PlandetailVO> list = new ArrayList<>();
     	
     	for(int i =1; i<=maxCount;i++) {
     		String itemNameKey = "item_name" + i ; 
     		String quantityKey = "quantity" + i ;
-    		
+    		log.info(itemNameKey);
+    		log.info(quantityKey);
     		if(formData.containsKey(itemNameKey) && formData.containsKey(quantityKey)) {
     			String itemName = (String) formData.get(itemNameKey);
     			int quantity = Integer.parseInt((String) formData.get(quantityKey));
@@ -266,10 +267,15 @@ public class ProjectController {
     			plan.setPlan_name(itemName);
     			plan.setPlan_amount(quantity);
     			
-    			PlandetailVO.add(plan);
+    			list.add(plan);
     		}
     	}
+    	list.forEach(plan ->
+    		log.info("list -> Item Name: {},Quantity: {}",plan.getPlan_name(), plan.getPlan_amount())
+    			);
+    	projectService.setproductionForm(list);
     	
+    	model.addAttribute("message","완료");
     	
  	   return "productionPlan";
     }

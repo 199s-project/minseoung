@@ -10,6 +10,7 @@ import com.example.demo.dto.FileVO;
 import com.example.demo.dto.MemberVO;
 import com.example.demo.dto.OrderformDetailVO;
 import com.example.demo.dto.OrderformVO;
+import com.example.demo.dto.PlandetailVO;
 import com.example.demo.dto.ProductVO;
 import com.example.demo.dto.ProductionPlanVO;
 import com.example.demo.dto.QuotationDetailVO;
@@ -70,6 +71,10 @@ public interface ProjectDAO {
 	int insertQuotationDetail(QuotationDetailVO quotationDetailVO);
 
 	List<ProductionPlanVO> getProductionPlanList();
+
+	Object insertProductionPlan(List<PlandetailVO> list);
+
+	Object insertPlandetail(List<PlandetailVO> list);
 	
 	
 	

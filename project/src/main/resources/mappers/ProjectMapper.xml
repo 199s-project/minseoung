@@ -186,7 +186,11 @@
 			#{quot_num}, #{product_num}, #{quotdetail_amount}, #{quotdetail_price}
 		)
 	</insert>
-
+	
+	<insert id="insertPlandetail" parameterType="PlandetailVO">
+	insert into plandetail (pd_num,plan_name,plan_amount)
+	values (#{pd_num},#{plan_name},#{plan_amount})
+	</insert>
 
 
 
