@@ -17,6 +17,7 @@ public class ProductionPlanVO {
 	private String pd_enddate;
 	private String pd_name;
 	private String pd_content;
+	private int pd_check;
 	
 	//plandetailVO
 	private int plandetail_num;

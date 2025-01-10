@@ -374,9 +374,16 @@ public class ProjectController {
     }
     
     
+    //facotry.html
+    @GetMapping("factory")
+    public String factory(Model model) {
+    	List<ProductionPlanVO> list = projectService.getProductionPlanList();
+    	model.addAttribute("getProductionPlanList", list);
+    	  log.info("getProductionPlanList",list);
+    	return "factory";
+    }
     
-    
-    
+ 
     
     
     

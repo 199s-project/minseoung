@@ -289,8 +289,8 @@ public class ProjectService {
 
 	public List<ProductionPlanVO> getProductionPlanList() {
 		// TODO Auto-generated method stub
-		log.info("getProductionPlanList()");
-		return projectDAO.getProductionPlanList();
+		log.info("getFatoryWorkList()");
+		return projectDAO.getFatoryWorkList();
 	}
 
 	

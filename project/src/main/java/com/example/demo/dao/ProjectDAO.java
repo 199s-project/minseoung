@@ -79,6 +79,8 @@ public interface ProjectDAO {
 	int insertProduction(ProductionPlanVO productionPlanVO);
 
 	int getfindLastProductionNumber();
+
+	List<ProductionPlanVO> getFatoryWorkList();
 	
 	
 	

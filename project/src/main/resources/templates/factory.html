@@ -104,9 +104,8 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
                            <th class="table-plus datatable-nosort">계약서 번호</th>
                            <th>작성자</th>
                            <th>생산목적</th>
-                           <th>생산 시작일</th>
-                           <th>생산 마감일</th>
                            <th>작성일</th>
+                           <th>업무 체크</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -116,9 +115,8 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
                               <td><th:block th:text="${stat.size-stat.index}"></th:block></td> 
                               <td><th:block th:text="${form.pd_writer}"></th:block></td>
                               <td><a th:href="@{/prdocutionPlan/detail(id=${form.pd_num})}"><th:block th:text="${form.pd_name}"></th:block></a></td>
-                              <td><th:block th:text="${form.pd_startdate}"></th:block></td>
-                              <td><th:block th:text="${form.pd_enddate}"></th:block></td>
                               <td><th:block th:text="${form.pd_writedate}"></th:block></td>
+                              <td><th:block th:if="${form.pd_check == 0}" th:text="'추가된 업무'"></th:block></td>
                            </tr>
                         </th:block>
                      </tbody>
