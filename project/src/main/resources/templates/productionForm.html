@@ -2,7 +2,7 @@
 <html>
 <head>
 <script>
-function fuc(member_dept){
+function func(member_dept){
 	document.production.selectdept.value=member_dept;
 	//form name=production
 }
@@ -186,13 +186,9 @@ function deleterow() {
 				<div style="border: 1px solid black; width: 1200px; padding: 60px 120px; margin: 0 auto;">
 				
 				    <div class="title" style="padding: 30px 0 40px 0; font-size: 40px;">생산 계획서</div>
-					<form action="setproductionForm" method="post">
+					<form action="postProductionForm" method="post">
 					<input type="hidden" id="maxCount" name="maxCount" value="1">
 					<table class="input-auto-size">
-					    <tr>
-					        <td class="heading-section" width="15%">작성일</td>
-					        <td colspan="3"><input type="date" id="pd_writedate" name="pd_writedate" size="60"></td>
-					    </tr>
 					    <tr>
 					        <td class="heading-section">작성자</td>
 					        <td colspan="3"><input type="text" id="pd_writer" name="pd_writer" size="60"></td>
@@ -231,8 +227,8 @@ function deleterow() {
 					    </tr>
 					    <tr class="added-row1">
 					        <td style="text-align: right; padding-right: 15px;">1</td>
-					        <td><input type="text" name="item_name1"></td>
-					        <td><input type="number" name="quantity1" class="amount-number" min=1 value=1 style="text-align: right;"></td>
+					        <td><input type="text" id = "item_name1"name="item_name1"></td>
+					        <td><input type="number" id="quantity1"name="quantity1" class="amount-number" min=1 value=1 style="text-align: right;"></td>
 					    </tr>
 
 					    <!-- Add more rows as needed -->
@@ -241,7 +237,7 @@ function deleterow() {
 					<table class="input-auto-size">
 					     <tr>
 					        <td class="heading-section">생산 목적</td>
-					        <td colspan="3"><input type="text" id="pd_production" name="pd_production" size="60"></td>
+					        <td colspan="3"><input type="text" id="pd_name" name="pd_name" size="60"></td>
 					    </tr>
 					    <tr>
 					        <td class="heading-section" style="text-align: center;">비고</td>

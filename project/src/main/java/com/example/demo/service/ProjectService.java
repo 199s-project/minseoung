@@ -293,10 +293,28 @@ public class ProjectService {
 		return projectDAO.getProductionPlanList();
 	}
 
-	public Object setproductionForm(List<PlandetailVO> list) {
+	
+	
+	
+	
+	public int setproductionForm(List<PlandetailVO> list) {
 		// TODO Auto-generated method stub
 		return projectDAO.insertPlandetail(list);
 	}
+
+	public int insertProduction(ProductionPlanVO productionPlanVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.insertProduction(productionPlanVO);
+	}
+
+	public int getfindLastProductionNumber() {
+		// TODO Auto-generated method stub
+		return projectDAO.getfindLastProductionNumber();
+	}
+
+
+	
+
 
 
 

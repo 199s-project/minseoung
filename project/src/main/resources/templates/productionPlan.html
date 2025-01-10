@@ -25,6 +25,10 @@ th {
 tr:hover {
     background-color: #f9f9f9; /* 마우스 오버 효과 */
 }
+.hidden_row{
+ display: none;
+ 
+}
 </style>
 
 <!--  <script>
@@ -96,6 +100,7 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
                   <table class="table hover multiple-select-row data-table-export nowrap">
                      <thead>
                         <tr>
+                           <th class="hidden_row"></th>
                            <th class="table-plus datatable-nosort">계약서 번호</th>
                            <th>작성자</th>
                            <th>생산목적</th>
@@ -107,9 +112,10 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
                      <tbody>
                         <th:block th:each="form,stat: ${getProductionPlanList}">
                            <tr>
+                           	  <td class="hidden_row"></td>
                               <td><th:block th:text="${stat.size-stat.index}"></th:block></td> 
                               <td><th:block th:text="${form.pd_writer}"></th:block></td>
-                              <td><th:block th:text="${form.pd_production}"></th:block></td>
+                              <td><th:block th:text="${form.pd_name}"></th:block></td>
                               <td><th:block th:text="${form.pd_startdate}"></th:block></td>
                               <td><th:block th:text="${form.pd_enddate}"></th:block></td>
                               <td><th:block th:text="${form.pd_writedate}"></th:block></td>

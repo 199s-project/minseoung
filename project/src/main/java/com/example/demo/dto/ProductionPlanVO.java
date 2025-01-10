@@ -15,11 +15,11 @@ public class ProductionPlanVO {
 	private String pd_dept;
 	private String pd_startdate;
 	private String pd_enddate;
-	private String pd_production;
+	private String pd_name;
 	private String pd_content;
 	
 	//plandetailVO
-	private int plan_num;
-	private String plan_name;
-	private String plan_amount;
+	private int plandetail_num;
+	private String plandetail_name;
+	private String plandetail_amount;
 }

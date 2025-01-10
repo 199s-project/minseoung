@@ -25,6 +25,9 @@ th {
 tr:hover {
     background-color: #f9f9f9; /* 마우스 오버 효과 */
 }
+.hidden_row {
+	display: none;
+}
 </style>
 
   
@@ -84,6 +87,7 @@ tr:hover {
                   <table class="table hover multiple-select-row data-table-export nowrap">
 							<thead>
 								<tr>
+									<th class="hidden_row"></th>
 									<th class="table-plus datatable-nosort">계약서 번호</th>
 									<th>계약서 이름</th>
 									<th>주문자 명</th>
@@ -96,6 +100,7 @@ tr:hover {
 							<tbody>
 									<th:block th:each="form,stat: ${quotationList}">
 										<tr onclick="toggleDetails(1)">
+											<td class="hidden_row"></td>
 										<td><th:block th:text="${stat.size-stat.index}"></th:block></td>  
 											<td><th:block th:text="${form.quot_name}"></th:block></td>
 											<td><th:block th:text="${form.company_num}"></th:block></td>

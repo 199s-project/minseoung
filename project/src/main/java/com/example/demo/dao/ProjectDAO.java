@@ -72,9 +72,13 @@ public interface ProjectDAO {
 
 	List<ProductionPlanVO> getProductionPlanList();
 
-	Object insertProductionPlan(List<PlandetailVO> list);
 
-	Object insertPlandetail(List<PlandetailVO> list);
+	int insertPlandetail(List<PlandetailVO> list);
+
+
+	int insertProduction(ProductionPlanVO productionPlanVO);
+
+	int getfindLastProductionNumber();
 	
 	
 	

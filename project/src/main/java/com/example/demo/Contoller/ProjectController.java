@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -244,40 +245,51 @@ public class ProjectController {
  	  log.info("productionForm()");
  	   return "productionForm";
     }
- // 생산계획서 폼 upload
-    @PostMapping("/setproductionForm")
-    public String setproductionForm(@RequestParam Map<String,Object>formData,Model model) {
- 	   
+    // 생산계획서 폼 upload
+    @PostMapping("postProductionForm")
+    public String postProductionForm(@RequestParam Map<String,Object> formData) {
+    		log.info("formData",formData);
+    	ProductionPlanVO productionPlanVO = new ProductionPlanVO();
+    	productionPlanVO.setPd_writer((String)formData.get("pd_writer"));
+    	productionPlanVO.setPd_dept((String)formData.get("pd_dept"));
+    	productionPlanVO.setPd_startdate((String)formData.get("pd_startdate"));
+    	productionPlanVO.setPd_enddate((String)formData.get("pd_enddate"));
+    	productionPlanVO.setPd_name((String)formData.get("pd_name"));
+    	productionPlanVO.setPd_content((String)formData.get("pd_content"));
+    	
+    	projectService.insertProduction(productionPlanVO);
+    	
+    	int num = (int) projectService.getfindLastProductionNumber();
     	//maxCount 추출
     	int maxCount = Integer.parseInt((String) formData.get("maxCount"));
-    	//나머지애들은 여기다 먼저 빼서 넣어
-    	//PlandetailVO
-    	List<PlandetailVO> list = new ArrayList<>();
     	
+    	List<PlandetailVO> list = new ArrayList<>();
+    
     	for(int i =1; i<=maxCount;i++) {
     		String itemNameKey = "item_name" + i ; 
     		String quantityKey = "quantity" + i ;
     		log.info(itemNameKey);
     		log.info(quantityKey);
+    		
     		if(formData.containsKey(itemNameKey) && formData.containsKey(quantityKey)) {
     			String itemName = (String) formData.get(itemNameKey);
     			int quantity = Integer.parseInt((String) formData.get(quantityKey));
     			
-    			PlandetailVO plan = new PlandetailVO();
-    			plan.setPlan_name(itemName);
-    			plan.setPlan_amount(quantity);
+    			PlandetailVO planVO = new PlandetailVO();
+    			planVO.setPd_num(num);
+    			planVO.setPlandetail_name(itemName);
+    			planVO.setPlandetail_amount(quantity);
     			
-    			list.add(plan);
+    			list.add(planVO);
     		}
     	}
-    	list.forEach(plan ->
-    		log.info("list -> Item Name: {},Quantity: {}",plan.getPlan_name(), plan.getPlan_amount())
+    
+    	list.forEach(planVO ->
+    		log.info("list -> Pd num: {}, Item Name: {},Quantity: {}",planVO.getPd_num(), planVO.getPlandetail_name(), planVO.getPlandetail_amount())
     			);
-    	projectService.setproductionForm(list);
     	
-    	model.addAttribute("message","완료");
-    	
- 	   return "productionPlan";
+    	int r = projectService.setproductionForm(list);
+ 	   return "redirect:productionPlan";
     }
     // 구매계약서 목록 화면 이동
     @GetMapping("purchaseContract")

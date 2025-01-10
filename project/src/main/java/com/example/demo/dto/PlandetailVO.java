@@ -9,10 +9,12 @@ import lombok.Setter;
 @Setter
 @Alias("PlandetailVO")
 public class PlandetailVO {
-	private int plan_num;
+	private int plandetail_num;
 	private int pd_num;
-	private String plan_name;
-	private int plan_amount;
+	private String plandetail_name;
+	private int plandetail_amount;
+
+
 	
 	
 }
