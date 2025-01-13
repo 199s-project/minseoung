@@ -375,14 +375,25 @@ public class ProjectController {
     
     
     //facotry.html
-    @GetMapping("factory")
-    public String factory(Model model) {
+    @GetMapping("factoryPlan")
+    public String factoryPlan(Model model) {
     	List<ProductionPlanVO> list = projectService.getProductionPlanList();
     	model.addAttribute("getProductionPlanList", list);
     	  log.info("getProductionPlanList",list);
-    	return "factory";
+    	return "factoryPlan";
     }
-    
+    @GetMapping("factoryPlanDetail")
+    public String getFactoryPlanDetail(@RequestParam("pd_num") int pd_num, Model model) {
+    	
+    	ProductionPlanVO productionPlanVO = projectService.getFactoryPlanDetail(pd_num);
+    	
+    	if(productionPlanVO ==null) {
+    		model.addAttribute("errorMessage","오류가 났습니다.");
+    		return "factoryPlan";
+    	}
+    	return "factoryPlanDetail";
+    	
+    }
  
     
     

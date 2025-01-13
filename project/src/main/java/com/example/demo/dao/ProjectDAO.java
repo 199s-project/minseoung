@@ -81,6 +81,8 @@ public interface ProjectDAO {
 	int getfindLastProductionNumber();
 
 	List<ProductionPlanVO> getFatoryWorkList();
+
+	ProductionPlanVO getFactoryPlanDetail(int pd_num);
 	
 	
 	

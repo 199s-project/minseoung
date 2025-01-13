@@ -211,5 +211,9 @@
 	<select id="getFatoryWorkList" resultType="ProductionPlanVO">
 	select * from productionplan where pd_check = 0;
 	</select>
+	
+	<select id="getFactoryPlanDetail" parameterType="int">
+		select * from productionplan where pd_num = ${pd_num}
+	</select>
 
 </mapper>

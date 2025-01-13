@@ -312,6 +312,11 @@ public class ProjectService {
 		return projectDAO.getfindLastProductionNumber();
 	}
 
+	public ProductionPlanVO getFactoryPlanDetail(int pd_num) {
+		// TODO Auto-generated method stub
+		return projectDAO.getFactoryPlanDetail(pd_num);
+	}
+
 
 	
 
