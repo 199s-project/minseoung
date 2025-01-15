@@ -115,18 +115,7 @@ public class ProjectService {
 	}
 	
 	
-	public List<OrderformVO> orderList(){
-		log.info("orderList()");
-		return projectDAO.orderList();
-	}
-	public List<QuotationVO> quotationList(){
-		log.info("quotationList()");
-		return projectDAO.quotationList();
-	}
-	public List<QuotationVO> allFormList(){
-		log.info("allFormList()");
-		return projectDAO.allFormList();
-	}
+
 	
 	
 	// 구매계약서 등록 화면 이동
@@ -286,14 +275,29 @@ public class ProjectService {
 	public ProductVO getProductByProductName(String product_name) {
 		return projectDAO.getProductByProductName(product_name);
 	}
-
+	
+	
+	
+	
+	// ======================== 김민성 ========================================
 	public List<ProductionPlanVO> getProductionPlanList() {
 		// TODO Auto-generated method stub
 		log.info("getFatoryWorkList()");
 		return projectDAO.getFatoryWorkList();
 	}
 
-	
+	public List<OrderformVO> orderList(){
+		log.info("orderList()");
+		return projectDAO.orderList();
+	}
+	public List<QuotationVO> quotationList(){
+		log.info("quotationList()");
+		return projectDAO.quotationList();
+	}
+	public List<QuotationVO> allFormList(){
+		log.info("allFormList()");
+		return projectDAO.allFormList();
+	}
 	
 	
 	
@@ -337,7 +341,7 @@ public class ProjectService {
 		return projectDAO.getMaterialName(pd_num);
 	}
 
-	public void setMaterialName(Map<String, Object> materialinfo) {
+	public Object setMaterialName(Map<String, Object> materialinfo) {
 		// TODO Auto-generated method stub
 		return projectDAO.setMaterialName(materialinfo);
 	}

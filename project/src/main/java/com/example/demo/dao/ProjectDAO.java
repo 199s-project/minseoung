@@ -41,14 +41,7 @@ public interface ProjectDAO {
 	
 	String companyNameCheck(String company_name);
 
-	//물품 구매 계약서
-	List<OrderformVO> orderList();
-	
-	//물품 판매 계약서
-	List<QuotationVO> quotationList();
-	
-	//All 계약서
-	List<QuotationVO> allFormList();
+
 	
 
 	int insertOrderform(OrderformVO orderformVO);
@@ -64,19 +57,7 @@ public interface ProjectDAO {
 
 	int insertQuotationDetail(QuotationDetailVO quotationDetailVO);
 
-	List<ProductionPlanVO> getProductionPlanList();
 
-
-	int insertPlandetail(List<PlandetailVO> list);
-
-
-	int insertProduction(ProductionPlanVO productionPlanVO);
-
-	int getfindLastProductionNumber();
-
-	List<ProductionPlanVO> getFatoryWorkList();
-	
-	List<ProductionPlanVO> getFactoryPlanDetailList(int pd_num);
 	
 	ProductionPlanVO getFactoryPlanDetail(int pd_num);
 	
@@ -91,10 +72,37 @@ public interface ProjectDAO {
 
 	   
 	   
-	   //------------
-	int getMaterialName(int pd_num);
+	 //------------ 김민성 ---------------------------------------------------------
+	   
+		List<ProductionPlanVO> getProductionPlanList();
 
-	Object setMaterialName(Map<String, Object> materialinfo);
+
+		int insertPlandetail(List<PlandetailVO> list);
+
+
+		int insertProduction(ProductionPlanVO productionPlanVO);
+
+		int getfindLastProductionNumber();
+
+		List<ProductionPlanVO> getFatoryWorkList();
+		
+		List<ProductionPlanVO> getFactoryPlanDetailList(int pd_num);   
+	   
+		//물품 구매 계약서
+		List<OrderformVO> orderList();
+		
+		//물품 판매 계약서
+		List<QuotationVO> quotationList();
+		
+		//All 계약서
+		List<QuotationVO> allFormList();
+	   
+		
+		
+		
+		int getMaterialName(int pd_num);
+
+		Object setMaterialName(Map<String, Object> materialinfo);
 
 
 	

@@ -227,25 +227,106 @@ public class ProjectController {
 	    return company;
 	}
 	
-	
-	
-	
-	// 생산계획서 목록 화면 이동
-    @GetMapping("productionPlan")
-    public String getproductionPlanList(Model model) {
- 	   
- 	   List<ProductionPlanVO> list = projectService.getProductionPlanList();
- 	   model.addAttribute("getProductionPlanList", list);
- 	  log.info("getProductionPlanList",list);
- 	   return "productionPlan";
+    // 구매계약서 등록 화면 이동
+    @GetMapping("getOrderformRegister")
+    public ModelAndView getOrderformRegister() throws Exception {
+    	mv = projectService.getOrderformRegister();
+        return mv;
     }
-	// 생산계획서 폼 이동
-    @GetMapping("productionForm")
-    public String productionForm() {
- 	   
- 	  log.info("productionForm()");
- 	   return "productionForm";
+    
+    // 구매계약서 등록
+    @PostMapping("postOrderformRegister")
+    public ModelAndView postOrderformRegister(@RequestParam Map<String,Object> map) throws Exception {
+    	
+    	mv = projectService.postOrderformRegister(map);
+    	
+        return mv;
     }
+    
+    // 판매계약서 등록 화면 이동
+    @GetMapping("getQuotationRegister")
+    public ModelAndView getQuotationRegister() throws Exception {
+    	mv = projectService.getQuotationRegister();
+        return mv;
+    }
+    
+    // 판매계약서 등록
+    @PostMapping("postQuotationRegister")
+    public ModelAndView postQuotationRegister(
+ 		   @RequestParam Map<String,Object> map
+ 		   ) throws Exception {
+ 	   mv = projectService.postQuotationRegister(map);
+ 	   return mv;
+    }
+    
+    // 입력한 회사명으로 해당 회사의 정보들을 불러오는 과정
+    @GetMapping("/getCompanyByCompanyName")
+    public ResponseEntity<CompanyVO> getCompanyByCompanyName(
+          @RequestParam("company_name") String company_name
+          ) {
+       CompanyVO company = projectService.getCompanyByCompanyName(company_name);
+       
+       return ResponseEntity.ok(company);
+    }
+
+    
+    // 입력한 제품명으로 해당 제품의 정보들을 불러오는 과정
+    @GetMapping("/getProductByProductName")
+    public ResponseEntity<ProductVO> getProductByProductName(
+          @RequestParam("product_name") String product_name
+          ) {
+       ProductVO product = projectService.getProductByProductName(product_name);
+       
+       return ResponseEntity.ok(product);
+    }
+    
+  
+
+	
+	 
+	 
+  
+	
+	 
+    
+    @ResponseBody
+    @GetMapping("/getCompanyNameList")
+    public String[] getCompanyNameList(Model model) {
+       log.info("controller access");
+       List<CompanyVO> companyList = projectService.getCompanyList();
+       
+       String[] companyNameList = new String[companyList.size()];
+       int cnt = 0;
+       for (CompanyVO company : companyList) {
+          companyNameList[cnt] = company.getCompany_name();
+          cnt++;
+       }
+       model.addAttribute("companyNameList",companyNameList);
+       
+        return companyNameList;
+    }
+   
+    
+    @ResponseBody
+    @GetMapping("/getProductNameList")
+    public String[] getProductNameList(Model model) {
+       log.info("controller access");
+       List<ProductVO> productList = projectService.getProductList();
+       
+       String[] productNameList = new String[productList.size()];
+       int cnt = 0;
+       for (ProductVO product : productList) {
+          productNameList[cnt] = product.getProduct_name();
+          cnt++;
+       }
+       model.addAttribute("productNameList",productNameList);
+       
+        return productNameList;
+    }
+	
+	
+
+    //================ 김민성 ============================================================================
     
     // 생산계획서 폼 upload
     @PostMapping("postProductionForm")
@@ -342,60 +423,23 @@ public class ProjectController {
     	log.info("allFormList",list);
         return "allForm";
     }
-    
-    // 구매계약서 등록 화면 이동
-    @GetMapping("getOrderformRegister")
-    public ModelAndView getOrderformRegister() throws Exception {
-    	mv = projectService.getOrderformRegister();
-        return mv;
+	// 생산계획서 목록 화면 이동
+    @GetMapping("productionPlan")
+    public String getproductionPlanList(Model model) {
+ 	   
+ 	   List<ProductionPlanVO> list = projectService.getProductionPlanList();
+ 	   model.addAttribute("getProductionPlanList", list);
+ 	  log.info("getProductionPlanList",list);
+ 	   return "productionPlan";
     }
-    
-    // 구매계약서 등록
-    @PostMapping("postOrderformRegister")
-    public ModelAndView postOrderformRegister(@RequestParam Map<String,Object> map) throws Exception {
-    	
-    	mv = projectService.postOrderformRegister(map);
-    	
-        return mv;
+	// 생산계획서 폼 이동
+    @GetMapping("productionForm")
+    public String productionForm() {
+ 	   
+ 	  log.info("productionForm()");
+ 	   return "productionForm";
     }
-    
-    // 판매계약서 등록 화면 이동
-    @GetMapping("getQuotationRegister")
-    public ModelAndView getQuotationRegister() throws Exception {
-    	mv = projectService.getQuotationRegister();
-        return mv;
-    }
-    
-    // 판매계약서 등록
-    @PostMapping("postQuotationRegister")
-    public ModelAndView postQuotationRegister(
- 		   @RequestParam Map<String,Object> map
- 		   ) throws Exception {
- 	   mv = projectService.postQuotationRegister(map);
- 	   return mv;
-    }
-    
-    // 입력한 회사명으로 해당 회사의 정보들을 불러오는 과정
-    @GetMapping("/getCompanyByCompanyName")
-    public ResponseEntity<CompanyVO> getCompanyByCompanyName(
-          @RequestParam("company_name") String company_name
-          ) {
-       CompanyVO company = projectService.getCompanyByCompanyName(company_name);
-       
-       return ResponseEntity.ok(company);
-    }
-
-    
-    // 입력한 제품명으로 해당 제품의 정보들을 불러오는 과정
-    @GetMapping("/getProductByProductName")
-    public ResponseEntity<ProductVO> getProductByProductName(
-          @RequestParam("product_name") String product_name
-          ) {
-       ProductVO product = projectService.getProductByProductName(product_name);
-       
-       return ResponseEntity.ok(product);
-    }
-    
+   
     //facotry.html
     @GetMapping("factoryPlan")
     public String factoryPlan(Model model) {
@@ -421,49 +465,6 @@ public class ProjectController {
     
     	return mv;
     }
-
-	
-	 
-	 
-  
-	
-	 
-    
-    @ResponseBody
-    @GetMapping("/getCompanyNameList")
-    public String[] getCompanyNameList(Model model) {
-       log.info("controller access");
-       List<CompanyVO> companyList = projectService.getCompanyList();
-       
-       String[] companyNameList = new String[companyList.size()];
-       int cnt = 0;
-       for (CompanyVO company : companyList) {
-          companyNameList[cnt] = company.getCompany_name();
-          cnt++;
-       }
-       model.addAttribute("companyNameList",companyNameList);
-       
-        return companyNameList;
-    }
-   
-    
-    @ResponseBody
-    @GetMapping("/getProductNameList")
-    public String[] getProductNameList(Model model) {
-       log.info("controller access");
-       List<ProductVO> productList = projectService.getProductList();
-       
-       String[] productNameList = new String[productList.size()];
-       int cnt = 0;
-       for (ProductVO product : productList) {
-          productNameList[cnt] = product.getProduct_name();
-          cnt++;
-       }
-       model.addAttribute("productNameList",productNameList);
-       
-        return productNameList;
-    }
-    
     
 
 	
