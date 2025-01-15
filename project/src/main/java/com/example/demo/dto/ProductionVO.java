@@ -20,7 +20,7 @@ public class ProductionVO {
 	private int pd_check;
 	
 	//plandetailVO
-	private int plandetail_num;
+	private int productiondetail_num;
 	private String product_name;
-	private String plandetail_amount;
+	private int productiondetail_amount;
 }

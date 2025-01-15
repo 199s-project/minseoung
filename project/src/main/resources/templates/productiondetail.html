@@ -181,26 +181,26 @@ document.addEventListener("DOMContentLoaded", () => {
 						<tr>
 							<td class="hidden_box"colspan="10"></td>
 							<td class="hidden_box"colspan="3" width="15%" style="text-align:center;">요청시간:</td>
-					        <td class="hidden_box"colspan="3" width="15%"><th:block th:text="${productionPlanVO.pd_writedate}"></th:block></td>
+					        <td class="hidden_box"colspan="3" width="15%"><th:block th:text="${productionVO.pd_writedate}"></th:block></td>
 						</tr>
 					</table>
 					<table class="input-auto-size">
 						
 					    <tr>
 					        <td class="heading-section">작성자</td>
-					        <td colspan="10" ><th:block th:text="${productionPlanVO.pd_writer}"></th:block></td>
+					        <td colspan="10" ><th:block th:text="${productionVO.pd_writer}"></th:block></td>
 					        
 					    </tr>
 					    <tr>
 					        <td class="heading-section">부서명</td>
-					        <td colspan="10"><th:block th:text="${productionPlanVO.pd_dept}"></th:block></td>
+					        <td colspan="10"><th:block th:text="${productionVO.pd_dept}"></th:block></td>
 					    </tr>
 					   
 					     <tr>
 					        <td class="heading-section" width="15%">생산 시작일</td>
-					        <td colspan="5"><th:block th:text="${productionPlanVO.pd_startdate}"></th:block></td>
+					        <td colspan="5"><th:block th:text="${productionVO.pd_startdate}"></th:block></td>
 					        <td class="heading-section" width="15%">생산 마감일</td>
-					        <td colspan="3"><th:block th:text="${productionPlanVO.pd_enddate}"></th:block></td>
+					        <td colspan="3"><th:block th:text="${productionVO.pd_enddate}"></th:block></td>
 					    </tr>
 					</table>
 					<form>
@@ -210,21 +210,21 @@ document.addEventListener("DOMContentLoaded", () => {
 					        <th class="heading-section">물품명</th>
 					        <th class="heading-section" width="15%">수량(ea)</th>
 					    </tr>
-					    <tr th:each="plandetailVO,stat : ${productionPlanList}">
+					    <tr th:each="productiondetailVO,stat : ${productionList}">
 					        <td><th:block th:text="${stat.count}"></th:block></td>
-					        <td class="item_name"><th:block id="item_name" name="item_name" th:text="${plandetailVO.plandetail_name}"></th:block></td>
-					        <td class="quantity"><th:block id="quantity" name="quantity" th:text="${plandetailVO.plandetail_amount}"></th:block></td>
+					        <td class="item_name"><th:block id="item_name" name="item_name" th:text="${productiondetailVO.product_name}"></th:block></td>
+					        <td class="quantity"><th:block id="quantity" name="quantity" th:text="${productiondetailVO.plandetail_amount}"></th:block></td>
 					    </tr>
 					    <!-- Add more rows as needed -->
 					</table>
 					<table class="input-auto-size">
 					     <tr>
 					        <td class="heading-section" width="15%">생산 목적</td>
-					        <td colspan="3"><th:block th:text="${productionPlanVO.pd_name}"></th:block></td>
+					        <td colspan="3"><th:block th:text="${productionVO.pd_name}"></th:block></td>
 					    </tr>
 					    <tr height="300px">
 					        <td class="heading-section" style="text-align: center;">비고</td>
-					        <td><th:block th:text="${productionPlanVO.pd_content}"></th:block></td>
+					        <td><th:block th:text="${productionVO.pd_content}"></th:block></td>
 					    </tr>
 					</table>
 					<div class="col-md-15 col-sm-17 text-right">

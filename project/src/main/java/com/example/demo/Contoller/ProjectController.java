@@ -330,7 +330,7 @@ public class ProjectController {
     
     // 생산계획서 폼 upload
     @PostMapping("postProductionForm")
-    public String postProductionForm(@RequestParam Map<String,Object> formData,Map<String,Object> materialinfo) {
+    public String postProductionForm(@RequestParam Map<String,Object> formData, Map<String,Object>materialinfo ) {
     		log.info("formData",formData);
     	ProductionVO productionVO = new ProductionVO();
     	productionVO.setPd_writer((String)formData.get("pd_writer"));
@@ -362,34 +362,37 @@ public class ProjectController {
     			ProductionDetailVO planVO = new ProductionDetailVO();
     			planVO.setPd_num(num);
     			planVO.setProduct_name(itemName);
-    			planVO.setPlandetail_amount(quantity);
+    			planVO.setProductiondetail_amount(quantity);
     			
     			list.add(planVO);
     		}
     	}
     
     	list.forEach(planVO ->
-    		log.info("list -> Pd num: {}, Item Name: {},Quantity: {}",planVO.getPd_num(), planVO.getProduct_name(), planVO.getPlandetail_amount())
+    		log.info("list -> Pd num: {}, Item Name: {},Quantity: {}",planVO.getPd_num(), planVO.getProduct_name(), planVO.getProductiondetail_amount())
     			);
     	
     	int r = projectService.setproductionForm(list);
-    	/// 추가본
-		/*
-		 * int pd_num = num; //pd_num의 값 int pd_count = maxCount ; //pd_num의 count값
-		 * 
-		 * projectService.getMaterialName(pd_num);
-		 * projectService.setMaterialName(materialinfo);
-		 * 
-		 * List<ProductionPlanVO> materialList = new ArrayList<>();
-		 * 
-		 * for(int i =1; i<=maxCount;i++) { ProductionPlanVO materialVO = new
-		 * ProductionPlanVO(); materialVO.setProduct_name(materialinfo.get());
-		 * 
-		 * }
-		 */
-    	
-    	
-    	
+    	  /// 추가분
+		
+		  int pd_num = num; //pd_num의 값 
+		  int pd_count = maxCount ; //pd_num의 count값
+		  
+		  projectService.getMaterialName(pd_num);
+		  projectService.setMaterialName(materialinfo);
+		  
+		  List<ProductionVO> materialList = new ArrayList<>();
+		  
+		  for(int i =1; i<=pd_count; i++) {
+			  ProductionVO materialVO = new ProductionVO(); 
+			  materialVO.setProduct_name((String) materialinfo.get("product_name"));
+			  materialVO.setProductiondetail_amount((int) materialinfo.get("productiondetail_amount"));
+			  
+			  materialList.add(materialVO);
+		  }
+		materialList.forEach(materialVO ->
+		log.info("list -> product_name {} , productiondetail_amount {}",materialVO.getProduct_name(), materialVO.getProductiondetail_amount())
+				);
     	
     	
  	   return "redirect:productionPlan";
@@ -448,18 +451,18 @@ public class ProjectController {
     	  log.info("factoryPlan",list);
     	return "factoryPlan";
     }
-    @GetMapping("getFactoryPlanDetail")
-    public ModelAndView getFactoryPlanDetail(@RequestParam("pd_num") int pd_num) {
+    @GetMapping("getFactoryDetail")
+    public ModelAndView getFactoryDetail(@RequestParam("pd_num") int pd_num) {
     	
-    	ProductionVO productionPlanVO = new ProductionVO();
-    	productionPlanVO = projectService.getFactoryDetail(pd_num);
+    	ProductionVO productionVO = new ProductionVO();
+    	productionVO = projectService.getFactoryDetail(pd_num);
     	List<ProductionVO> productionListVO = projectService.getFactoryDetailList(pd_num);
     	System.out.println(productionListVO);
     	
     	mv = new ModelAndView();
-    	mv.addObject("productionPlanVO",productionPlanVO);
-    	mv.addObject("productionPlanList",productionListVO);
-    	mv.setViewName("FactoryPlanDetail");
+    	mv.addObject("productionVO",productionVO);
+    	mv.addObject("productionList",productionListVO);
+    	mv.setViewName("factoryDetail");
     	
     	System.out.println(mv);
     

@@ -194,10 +194,10 @@
 	</insert>
 	
 	<insert id="insertproductiondetail" parameterType="ProductionDetailVO">
-		insert into productiondetail (pd_num,product_name,plandetail_amount)
+		insert into productiondetail (pd_num,product_name,productiondetail_amount)
 		values
 	 <foreach collection="list" item="planVO" separator=",">
-	 (#{planVO.pd_num},#{planVO.product_name},#{planVO.plandetail_amount})
+	 (#{planVO.pd_num},#{planVO.product_name},#{planVO.productiondetail_amount})
 	 </foreach>
 	</insert> 
 	
@@ -209,7 +209,7 @@
 		select * from production where pd_num = #{pd_num}
 	</select>
 	
-	<select id="getFactoryList" parameterType="int" >
+	<select id="getFactoryDetailList" parameterType="int" >
 		select * from productiondetail where pd_num = #{pd_num}
 	</select>
 	
@@ -227,9 +227,9 @@
   
    <!-- 생산 계획서 -->
    
-  <!--  <select id="getMaterialName" parameterType="int" resultType="materialinfo" >
+   <select id="getMaterialName" parameterType="int" resultType="materialinfo" >
    select  product_name,plandetail_amount from productiondetail where pd_num = #{pd_num}
-   </select> -->
+   </select> 
    
    
    

@@ -101,9 +101,16 @@ public interface ProjectDAO {
 
 		
 		
+		
+		
+		
+		
+		//추가분
 		int getMaterialName(int pd_num);
 
 		Object setMaterialName(Map<String, Object> materialinfo);
+
+		ProductionVO getFactoryDetail(int pd_num);
 
 
 

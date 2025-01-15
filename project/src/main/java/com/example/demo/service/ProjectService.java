@@ -333,9 +333,12 @@ public class ProjectService {
 
 	public ProductionVO getFactoryDetail(int pd_num) {
 		// TODO Auto-generated method stub
-		return projectDAO.getFactoryPlanDetail(pd_num);
+		return projectDAO.getFactoryDetail(pd_num);
 	}
-
+	
+	
+	
+	//추가분
 	public int getMaterialName(int pd_num) {
 		// TODO Auto-generated method stub
 		return projectDAO.getMaterialName(pd_num);
