@@ -30,6 +30,7 @@ import com.example.demo.dto.PlandetailVO;
 import com.example.demo.dto.ProductVO;
 import com.example.demo.dto.ProductionPlanVO;
 import com.example.demo.dto.QuotationVO;
+import com.example.demo.dto.RecipeVO;
 import com.example.demo.service.ProjectService;
 
 import jakarta.servlet.http.HttpSession;
@@ -245,9 +246,10 @@ public class ProjectController {
  	  log.info("productionForm()");
  	   return "productionForm";
     }
+    
     // 생산계획서 폼 upload
     @PostMapping("postProductionForm")
-    public String postProductionForm(@RequestParam Map<String,Object> formData) {
+    public String postProductionForm(@RequestParam Map<String,Object> formData,Map<String,Object> materialinfo) {
     		log.info("formData",formData);
     	ProductionPlanVO productionPlanVO = new ProductionPlanVO();
     	productionPlanVO.setPd_writer((String)formData.get("pd_writer"));
@@ -262,6 +264,7 @@ public class ProjectController {
     	int num = (int) projectService.getfindLastProductionNumber();
     	//maxCount 추출
     	int maxCount = Integer.parseInt((String) formData.get("maxCount"));
+    	System.out.println(maxCount);
     	
     	List<PlandetailVO> list = new ArrayList<>();
     
@@ -289,6 +292,25 @@ public class ProjectController {
     			);
     	
     	int r = projectService.setproductionForm(list);
+    	/// 추가본
+    	int pd_num = num;		//pd_num의 값
+    	int pd_count = maxCount ;	//pd_num의 count값
+    	
+    	projectService.getMaterialName(pd_num);
+    	projectService.setMaterialName(materialinfo);
+    	
+    	List<ProductionPlanVO> materialList = new ArrayList<>();
+    	
+    	for(int i =1; i<=maxCount;i++) {
+    		ProductionPlanVO materialVO = new ProductionPlanVO();
+    		materialVO.setPlandetail_name(materialinfo.get(plandetail_name));
+    		
+    	}
+    	
+    	
+    	
+    	
+    	
  	   return "redirect:productionPlan";
     }
     // 구매계약서 목록 화면 이동
@@ -362,6 +384,7 @@ public class ProjectController {
        
        return ResponseEntity.ok(company);
     }
+
     
     // 입력한 제품명으로 해당 제품의 정보들을 불러오는 과정
     @GetMapping("/getProductByProductName")
@@ -373,29 +396,73 @@ public class ProjectController {
        return ResponseEntity.ok(product);
     }
     
-    
     //facotry.html
     @GetMapping("factoryPlan")
     public String factoryPlan(Model model) {
     	List<ProductionPlanVO> list = projectService.getProductionPlanList();
     	model.addAttribute("getProductionPlanList", list);
-    	  log.info("getProductionPlanList",list);
+    	  log.info("factoryPlan",list);
     	return "factoryPlan";
     }
-    @GetMapping("factoryPlanDetail")
-    public String getFactoryPlanDetail(@RequestParam("pd_num") int pd_num, Model model) {
+    @GetMapping("getFactoryPlanDetail")
+    public ModelAndView getFactoryPlanDetail(@RequestParam("pd_num") int pd_num) {
     	
-    	ProductionPlanVO productionPlanVO = projectService.getFactoryPlanDetail(pd_num);
+    	ProductionPlanVO productionPlanVO = new ProductionPlanVO();
+    	productionPlanVO = projectService.getFactoryPlanDetail(pd_num);
+    	List<ProductionPlanVO> productionPlanListVO = projectService.getFactoryPlanDetailList(pd_num);
+    	System.out.println(productionPlanListVO);
     	
-    	if(productionPlanVO ==null) {
-    		model.addAttribute("errorMessage","오류가 났습니다.");
-    		return "factoryPlan";
-    	}
-    	return "factoryPlanDetail";
+    	mv = new ModelAndView();
+    	mv.addObject("productionPlanVO",productionPlanVO);
+    	mv.addObject("productionPlanList",productionPlanListVO);
+    	mv.setViewName("FactoryPlanDetail");
     	
-    }
- 
+    	System.out.println(mv);
     
+    	return mv;
+    }
+
+	
+	 
+	 
+  
+	
+	 
+    
+    @ResponseBody
+    @GetMapping("/getCompanyNameList")
+    public String[] getCompanyNameList(Model model) {
+       log.info("controller access");
+       List<CompanyVO> companyList = projectService.getCompanyList();
+       
+       String[] companyNameList = new String[companyList.size()];
+       int cnt = 0;
+       for (CompanyVO company : companyList) {
+          companyNameList[cnt] = company.getCompany_name();
+          cnt++;
+       }
+       model.addAttribute("companyNameList",companyNameList);
+       
+        return companyNameList;
+    }
+   
+    
+    @ResponseBody
+    @GetMapping("/getProductNameList")
+    public String[] getProductNameList(Model model) {
+       log.info("controller access");
+       List<ProductVO> productList = projectService.getProductList();
+       
+       String[] productNameList = new String[productList.size()];
+       int cnt = 0;
+       for (ProductVO product : productList) {
+          productNameList[cnt] = product.getProduct_name();
+          cnt++;
+       }
+       model.addAttribute("productNameList",productNameList);
+       
+        return productNameList;
+    }
     
     
 

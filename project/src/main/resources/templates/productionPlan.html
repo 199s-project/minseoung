@@ -31,16 +31,10 @@ tr:hover {
 }
 </style>
 
-<!--  <script>
-        function toggleDetails(orderId) {
-            const detailRow = document.getElementById('details-' + orderId);
-            if (detailRow.style.display === 'none' || detailRow.style.display === '') {
-                detailRow.style.display = 'table-row';
-            } else {
-                detailRow.style.display = 'none';
-            }
-        }
-    </script> -->
+<script>
+	
+
+</script>
 
 
 
@@ -115,7 +109,7 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
                            	  <td class="hidden_row"></td>
                               <td><th:block th:text="${stat.size-stat.index}"></th:block></td> 
                               <td><th:block th:text="${form.pd_writer}"></th:block></td>
-                              <td><a th:href="@{/prdocutionPlan/detail(id=${form.pd_num})}"><th:block th:text="${form.pd_name}"></th:block></a></td>
+                              <td><a th:href="@{getFactoryPlanDetail(pd_num=${form.pd_num})}"><th:block th:text="${form.pd_name}"></th:block></a></td>
                               <td><th:block th:text="${form.pd_startdate}"></th:block></td>
                               <td><th:block th:text="${form.pd_enddate}"></th:block></td>
                               <td><th:block th:text="${form.pd_writedate}"></th:block></td>
@@ -128,11 +122,6 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
             
             <!-- Export Datatable End -->
          </div>
-         
-         
-         
-         
-         
          
          <div class="footer-wrap pd-20 mb-20 card-box">
            we are all 1995's  <a href="" target="_blank">Suit</a>

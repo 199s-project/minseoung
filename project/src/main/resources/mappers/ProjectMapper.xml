@@ -114,23 +114,6 @@
 	
 
 	
-	
-	<select id="getCompanyList" resultType="CompanyVO">
-		select *
-		from company
-	</select>
-		
-	<select id="getProductList" resultType="ProductVO">
-		select *
-		from product
-	</select>
-		
-	<select id="getCompanyByCompanyName" resultType="CompanyVO">
-		select *
-		from company
-		where company_name = #{company_name}
-	</select>
-		
 	<insert id="insertOrderform" parameterType="OrderformVO">
 		insert into orderform (
 			orderform_name, orderform_stat, company_num, company_num2, orderform_content, orderform_regdate, orderform_startDate, orderform_endDate
@@ -147,12 +130,16 @@
 		limit 1;
 	</select>
 		
-	<select id="getProductByProductName" resultType="ProductVO">
-		select *
-		from product
-		where product_name = #{product_name}
-	</select>	
-		
+	   <select id="getCompanyByCompanyName" resultType="CompanyVO">
+      select *
+      from company
+      where company_name = #{company_name}
+   </select>
+	   <select id="getProductByProductName" resultType="ProductVO">
+      select *
+      from product
+      where product_name = #{product_name}
+   </select>   
 		
 	<insert id="insertOrderformDetail" parameterType="OrderformDetailVO">
 		insert into orderformdetail (
@@ -187,16 +174,14 @@
 		)
 	</insert>
 	
-
+	
 	
 	<insert id="insertProduction" parameterType="ProductionPlanVO">
 	insert into productionplan (pd_writedate,pd_writer,pd_dept,pd_startdate,pd_enddate,pd_name,pd_content,pd_check)
 	values (now(),#{pd_writer},#{pd_dept},#{pd_startdate},#{pd_enddate},#{pd_name},#{pd_content},0)
 	</insert>
 	
-	<select id="getfindLastProductionNumber" resultType="int">
-	select pd_num from productionplan order by pd_num desc limit 1;
-	</select>
+	
 	
 	
 	
@@ -212,8 +197,66 @@
 	select * from productionplan where pd_check = 0;
 	</select>
 	
-	<select id="getFactoryPlanDetail" parameterType="int">
-		select * from productionplan where pd_num = ${pd_num}
+	<select id="getFactoryPlanDetail" parameterType="int" >
+		select * from productionplan where pd_num = #{pd_num}
 	</select>
-
+	
+	<select id="getFactoryPlanDetailList" parameterType="int" >
+		select * from plandetail where pd_num = #{pd_num}
+	</select>
+	
+	   <select id="getCompanyList" resultType="CompanyVO">
+      select *
+      from company
+   </select>
+      
+   <select id="getProductList" resultType="ProductVO">
+      select *
+      from product
+   </select>
+   
+    <select id="getfindLastProductionNumber" resultType="int">
+	select pd_num from productionplan order by pd_num desc limit 1;
+	</select>
+	
+  
+   <!-- 생산 계획서 -->
+   
+   <select id="getMaterialName" parameterType="int" resultType="materialinfo" >
+   select  plandetail_name,plandetail_amount from plandetail where pd_num = #{pd_num}
+   </select>
+   
+   <!-- 방금 생성된 pd_num을 갖고와라-->
+    <!--  
+   <select id="getfindLastProductionNumber" resultType="int">
+	select pd_num from plandetail order by pd_num desc limit 1;
+	</select>
+    갖고온 pd_num으로 plandetail의 plandetail_name,plandetail_amoun를 구하라-->
+       <!--
+   <select id="" parameterType="int" resultType="ProductionPlanVO">
+   select  plandetail_name,plandetail_amount from plandetail where pd_num = #{pd_num} 
+   </select>
+   plandetail_name과 recipe_name이 같은 recipe_num을 구하라 -->
+       <!--
+   <select id="" resultType="int">
+   select recipe_num  from  recipe , plandetail where recipe.recipe_name = plandetail.plandetail_name limit 1;
+   </select>
+    구한 recipe_num을 갖고 material_name과 material_amount를 구하라.  -->
+     <!--  
+   <select id="" parameterType="int" resultType="">
+   select material_name,material_amount from recipedetail where recipe_num = #{recipe_num};
+   </select>
+   for each 돌릴 수 count  -->
+       <!--
+   <select id="" >
+   select count(recipe_num) from recipedetail where recipe_num = #{recipe_num};
+   </select>
+  
+   -->
+   
+  
+   
+   
+   
+   
 </mapper>

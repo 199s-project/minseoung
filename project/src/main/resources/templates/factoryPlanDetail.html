@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html>
-<title>생산 계획서 상세보기</title>
 <head>
-<script>
-function func(member_dept){
-	document.production.selectdept.value=member_dept;
-	//form name=production
-}
+<title>생산 계획서 상세보기</title>
 
-</script>
 
     
 <style>
@@ -105,44 +99,42 @@ function func(member_dept){
             background: transparent;
             color: transparent;
           }
-
+	.hidden_box{
+	 	border-top: none; 
+		border-bottom: none;
+	 	border-left: none;
+	    border-right: none;
+	}
 </style>
 
 
 
 <script>
+// 데이터를 테이블에 렌더링하는 함수
+function renderPlanDetails(details) {
+    const table = document.getElementById("products"); // 테이블 ID 선택
+    const tbody = table.querySelector("tbody") || table;
 
-var count = 2;
+    // 데이터 추가
+    details.forEach((detail) => {
+        const row = document.createElement("tr");
 
-function addrow() {
-	
-	const elem = document.createElement("tr");
-	
-	elem.classList.add('added-row'+count);
-	elem.innerHTML = `
-        <td class="rownum">`+count+`</td>
-        <td><input type="text" name="item_name` + count + `"></td>
-        <td><input type="number" name="quantity` + count + `" class="amount-number" min=1 value=1></td>
-	`;
-	count++;
-	document.querySelector(".products").appendChild(elem);
-	document.getElementById("maxCount").value= count -1;
+        row.innerHTML = `
+            <td class="rownum" style="text-align: right; padding-right: 15px;">${detail.count}</td>
+            <td>${detail.plandetail_num}</td>
+            <td class="item_name">${detail.plandetail_name}</td>
+            <td class="quantity">${detail.plandetail_amount}</td>
+        `;
+
+        tbody.appendChild(row);
+    });
 }
 
-function deleterow() {
-	
-	if (count>2) {
-	    const table = document.getElementById('products');
-	    count--;
-	    table.deleteRow(count);
-	    document.getElementById("maxCount").value = count -1;
-	}
-}
-
-
+// DOMContentLoaded 이벤트 핸들러로 실행
+document.addEventListener("DOMContentLoaded", () => {
+    renderPlanDetails(factoryPlanDetails);
+});
 </script>
-
-
 
 
 </head>
@@ -161,21 +153,12 @@ function deleterow() {
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
+									<li class="breadcrumb-item"><a href="index">Home</a></li>
+									<li class="breadcrumb-item active" aria-current="page">생산 계획서</li>
 								</ol>
 							</nav>
-						</div>
-						<div class="col-md-6 col-sm-12 text-right">
-							<div class="dropdown">
-								<a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-									January 2018
-								</a>
-								<div class="dropdown-menu dropdown-menu-right">
-									<a class="dropdown-item" href="#">Export List</a>
-									<a class="dropdown-item" href="#">Policies</a>
-									<a class="dropdown-item" href="#">View Assets</a>
 								</div>
+							  </div> 
 							</div>
 						</div>
 					</div>
@@ -185,64 +168,71 @@ function deleterow() {
 				<div class="card-box mb-30">
 				<div style="padding: 70px;">
 				<div style="border: 1px solid black; width: 1200px; padding: 60px 120px; margin: 0 auto;">
-				
+				<div class="pb-20">
+						<div class="dt-buttons btn-group flex-wrap">    
+								<button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>CSV</span></button> 
+								<button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>PDF</span></button> 
+								<button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>Print</span></button>
+						</div>
+				</div>
 				    <div class="title" style="padding: 30px 0 40px 0; font-size: 40px;">생산 계획서</div>
-					<form action="postProductionForm" method="post">
+					<input type="hidden" id="maxCount" name="maxCount" value="1">
+					<table style=" border-top: none; border-bottom: none; border-left: none; border-right: none;">
+						<tr>
+							<td class="hidden_box"colspan="10"></td>
+							<td class="hidden_box"colspan="3" width="15%" style="text-align:center;">요청시간:</td>
+					        <td class="hidden_box"colspan="3" width="15%"><th:block th:text="${productionPlanVO.pd_writedate}"></th:block></td>
+						</tr>
+					</table>
 					<table class="input-auto-size">
+						
 					    <tr>
 					        <td class="heading-section">작성자</td>
-					        <td colspan="3"><span th:utext="${member_name}"></span></td>
+					        <td colspan="10" ><th:block th:text="${productionPlanVO.pd_writer}"></th:block></td>
+					        
 					    </tr>
 					    <tr>
 					        <td class="heading-section">부서명</td>
-					        <td colspan="3">
+					        <td colspan="10"><th:block th:text="${productionPlanVO.pd_dept}"></th:block></td>
 					    </tr>
 					   
 					     <tr>
 					        <td class="heading-section" width="15%">생산 시작일</td>
-					        <td colspan="3"></td>
-					    </tr>
-					     <tr>
+					        <td colspan="5"><th:block th:text="${productionPlanVO.pd_startdate}"></th:block></td>
 					        <td class="heading-section" width="15%">생산 마감일</td>
-					        <td colspan="3"></td>
+					        <td colspan="3"><th:block th:text="${productionPlanVO.pd_enddate}"></th:block></td>
 					    </tr>
 					</table>
-					
+					<form>
 					<table class="products input-auto-size" id="products">
 					    <tr>
-					        <th width="10%">번호</th>
-					        <th>물품명
-					        	<button type="button" class="btn btn-primary m-2 rowbtn" onclick="addrow()">ROW 추가</button> 
-					        	<button type="button" class="btn btn-primary m-2 rowbtn" onclick="deleterow()">ROW 제거</button>
-					        </th>
-					        <th width="15%">수량(ea)</th>
+					        <th class="heading-section"width="15%">번호</th>
+					        <th class="heading-section">물품명</th>
+					        <th class="heading-section" width="15%">수량(ea)</th>
 					    </tr>
-					    <tr class="added-row1">
-					        <td style="text-align: right; padding-right: 15px;">1</td>
-					        <td><input type="text" id = "item_name1"name="item_name1"></td>
-					        <td><input type="number" id="quantity1"name="quantity1" class="amount-number" min=1 value=1 style="text-align: right;"></td>
+					    <tr th:each="plandetailVO,stat : ${productionPlanList}">
+					        <td><th:block th:text="${stat.count}"></th:block></td>
+					        <td class="item_name"><th:block id="item_name" name="item_name" th:text="${plandetailVO.plandetail_name}"></th:block></td>
+					        <td class="quantity"><th:block id="quantity" name="quantity" th:text="${plandetailVO.plandetail_amount}"></th:block></td>
 					    </tr>
-
 					    <!-- Add more rows as needed -->
 					</table>
-					
 					<table class="input-auto-size">
 					     <tr>
-					        <td class="heading-section">생산 목적</td>
-					        <td colspan="3"></td>
+					        <td class="heading-section" width="15%">생산 목적</td>
+					        <td colspan="3"><th:block th:text="${productionPlanVO.pd_name}"></th:block></td>
 					    </tr>
-					    <tr>
+					    <tr height="300px">
 					        <td class="heading-section" style="text-align: center;">비고</td>
-					        <td><textarea id="pd_content" name="pd_content" rows="10" style="width: 100%;"></textarea></td>
+					        <td><th:block th:text="${productionPlanVO.pd_content}"></th:block></td>
 					    </tr>
 					</table>
-					<button type="submit" value="생산하기" class="btn btn-primary m-2 rowbtn">생산</button>
+					<div class="col-md-15 col-sm-17 text-right">
+					<br><br>
+						<button type="submit" class="btn btn-primary m-2 rowbtn" value="생산">생산</button>
+					</div>
 					</form>
 				</div>
-				
-				
-				
-				
 				</div>
 				</div>
 				

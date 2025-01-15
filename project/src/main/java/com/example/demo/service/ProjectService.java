@@ -282,7 +282,7 @@ public class ProjectService {
 	public CompanyVO getCompanyByCompanyName(String company_name) {
 		return projectDAO.getCompanyByCompanyName(company_name);
 	}
-  
+		  
 	public ProductVO getProductByProductName(String product_name) {
 		return projectDAO.getProductByProductName(product_name);
 	}
@@ -312,13 +312,35 @@ public class ProjectService {
 		return projectDAO.getfindLastProductionNumber();
 	}
 
+	
+
+	public List<CompanyVO> getCompanyList() {
+		 return projectDAO.getCompanyList();
+	}
+		   
+	public List<ProductVO> getProductList() {
+		 return projectDAO.getProductList();
+	}
+
+	public List<ProductionPlanVO> getFactoryPlanDetailList(int pd_num) {
+		// TODO Auto-generated method stub
+		return projectDAO.getFactoryPlanDetailList(pd_num);
+	}
+
 	public ProductionPlanVO getFactoryPlanDetail(int pd_num) {
 		// TODO Auto-generated method stub
 		return projectDAO.getFactoryPlanDetail(pd_num);
 	}
 
+	public int getMaterialName(int pd_num) {
+		// TODO Auto-generated method stub
+		return projectDAO.getMaterialName(pd_num);
+	}
 
-	
+	public void setMaterialName(Map<String, Object> materialinfo) {
+		// TODO Auto-generated method stub
+		return projectDAO.setMaterialName(materialinfo);
+	}
 
 
 

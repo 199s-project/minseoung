@@ -50,17 +50,11 @@ public interface ProjectDAO {
 	//All 계약서
 	List<QuotationVO> allFormList();
 	
-	List<CompanyVO> getCompanyList();
-
-	List<ProductVO> getProductList();
-		
-	CompanyVO getCompanyByCompanyName(String company_name);
 
 	int insertOrderform(OrderformVO orderformVO);
 
 	int getLastOrderformNum();
 		
-	ProductVO getProductByProductName(String product_name);	
 
 	int insertOrderformDetail(OrderformDetailVO orderformDetailVO);
 
@@ -81,11 +75,29 @@ public interface ProjectDAO {
 	int getfindLastProductionNumber();
 
 	List<ProductionPlanVO> getFatoryWorkList();
-
+	
+	List<ProductionPlanVO> getFactoryPlanDetailList(int pd_num);
+	
 	ProductionPlanVO getFactoryPlanDetail(int pd_num);
 	
 	
+	CompanyVO getCompanyByCompanyName(String company_name);
+	   
+	ProductVO getProductByProductName(String product_name);   
 	
+	   List<CompanyVO> getCompanyList();
+
+	   List<ProductVO> getProductList();
+
+	   
+	   
+	   //------------
+	int getMaterialName(int pd_num);
+
+	Object setMaterialName(Map<String, Object> materialinfo);
+
+
 	
-	
+
+
 }
