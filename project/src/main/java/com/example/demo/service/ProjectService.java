@@ -16,9 +16,9 @@ import com.example.demo.dto.FileVO;
 import com.example.demo.dto.MemberVO;
 import com.example.demo.dto.OrderformDetailVO;
 import com.example.demo.dto.OrderformVO;
-import com.example.demo.dto.PlandetailVO;
+import com.example.demo.dto.ProductionDetailVO;
 import com.example.demo.dto.ProductVO;
-import com.example.demo.dto.ProductionPlanVO;
+import com.example.demo.dto.ProductionVO;
 import com.example.demo.dto.QuotationDetailVO;
 import com.example.demo.dto.QuotationVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -280,7 +280,7 @@ public class ProjectService {
 	
 	
 	// ======================== 김민성 ========================================
-	public List<ProductionPlanVO> getProductionPlanList() {
+	public List<ProductionVO> getProductionList() {
 		// TODO Auto-generated method stub
 		log.info("getFatoryWorkList()");
 		return projectDAO.getFatoryWorkList();
@@ -301,14 +301,14 @@ public class ProjectService {
 	
 	
 	
-	public int setproductionForm(List<PlandetailVO> list) {
+	public int setproductionForm(List<ProductionDetailVO> list) {
 		// TODO Auto-generated method stub
-		return projectDAO.insertPlandetail(list);
+		return projectDAO.insertproductiondetail(list);
 	}
 
-	public int insertProduction(ProductionPlanVO productionPlanVO) {
+	public int insertProduction(ProductionVO productionVO) {
 		// TODO Auto-generated method stub
-		return projectDAO.insertProduction(productionPlanVO);
+		return projectDAO.insertProduction(productionVO);
 	}
 
 	public int getfindLastProductionNumber() {
@@ -326,12 +326,12 @@ public class ProjectService {
 		 return projectDAO.getProductList();
 	}
 
-	public List<ProductionPlanVO> getFactoryPlanDetailList(int pd_num) {
+	public List<ProductionVO> getFactoryDetailList(int pd_num) {
 		// TODO Auto-generated method stub
-		return projectDAO.getFactoryPlanDetailList(pd_num);
+		return projectDAO.getFactoryDetailList(pd_num);
 	}
 
-	public ProductionPlanVO getFactoryPlanDetail(int pd_num) {
+	public ProductionVO getFactoryDetail(int pd_num) {
 		// TODO Auto-generated method stub
 		return projectDAO.getFactoryPlanDetail(pd_num);
 	}
@@ -345,6 +345,8 @@ public class ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.setMaterialName(materialinfo);
 	}
+
+
 
 
 

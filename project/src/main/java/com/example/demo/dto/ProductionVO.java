@@ -7,8 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Alias("ProductionPlanVO")
-public class ProductionPlanVO {
+@Alias("ProductionVO")
+public class ProductionVO {
 	private int pd_num;
 	private String pd_writedate;
 	private String pd_writer;
@@ -21,6 +21,6 @@ public class ProductionPlanVO {
 	
 	//plandetailVO
 	private int plandetail_num;
-	private String plandetail_name;
+	private String product_name;
 	private String plandetail_amount;
 }

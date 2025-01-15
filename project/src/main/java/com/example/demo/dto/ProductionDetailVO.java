@@ -7,11 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Alias("PlandetailVO")
-public class PlandetailVO {
+@Alias("ProductionDetailVO")
+public class ProductionDetailVO {
 	private int plandetail_num;
 	private int pd_num;
-	private String plandetail_name;
+	private String product_name;
 	private int plandetail_amount;
 
 

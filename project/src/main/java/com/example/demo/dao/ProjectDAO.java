@@ -10,9 +10,9 @@ import com.example.demo.dto.FileVO;
 import com.example.demo.dto.MemberVO;
 import com.example.demo.dto.OrderformDetailVO;
 import com.example.demo.dto.OrderformVO;
-import com.example.demo.dto.PlandetailVO;
+import com.example.demo.dto.ProductionDetailVO;
 import com.example.demo.dto.ProductVO;
-import com.example.demo.dto.ProductionPlanVO;
+import com.example.demo.dto.ProductionVO;
 import com.example.demo.dto.QuotationDetailVO;
 import com.example.demo.dto.QuotationVO;
 
@@ -59,7 +59,7 @@ public interface ProjectDAO {
 
 
 	
-	ProductionPlanVO getFactoryPlanDetail(int pd_num);
+	ProductionVO getFactoryPlanDetail(int pd_num);
 	
 	
 	CompanyVO getCompanyByCompanyName(String company_name);
@@ -74,19 +74,19 @@ public interface ProjectDAO {
 	   
 	 //------------ 김민성 ---------------------------------------------------------
 	   
-		List<ProductionPlanVO> getProductionPlanList();
+		List<ProductionVO> getProductionList();
 
 
-		int insertPlandetail(List<PlandetailVO> list);
+		int insertProductiondetail(List<ProductionDetailVO> list);
 
 
-		int insertProduction(ProductionPlanVO productionPlanVO);
+		int insertProduction(ProductionVO productionVO);
 
 		int getfindLastProductionNumber();
 
-		List<ProductionPlanVO> getFatoryWorkList();
+		List<ProductionVO> getFatoryWorkList();
 		
-		List<ProductionPlanVO> getFactoryPlanDetailList(int pd_num);   
+		List<ProductionVO> getFactoryDetailList(int pd_num);   
 	   
 		//물품 구매 계약서
 		List<OrderformVO> orderList();
@@ -97,12 +97,14 @@ public interface ProjectDAO {
 		//All 계약서
 		List<QuotationVO> allFormList();
 	   
-		
+		int insertproductiondetail(List<ProductionDetailVO> list);
+
 		
 		
 		int getMaterialName(int pd_num);
 
 		Object setMaterialName(Map<String, Object> materialinfo);
+
 
 
 	

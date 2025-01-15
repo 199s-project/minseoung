@@ -26,9 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.dto.CompanyVO;
 import com.example.demo.dto.FileVO;
 import com.example.demo.dto.OrderformVO;
-import com.example.demo.dto.PlandetailVO;
+import com.example.demo.dto.ProductionDetailVO;
 import com.example.demo.dto.ProductVO;
-import com.example.demo.dto.ProductionPlanVO;
+import com.example.demo.dto.ProductionVO;
 import com.example.demo.dto.QuotationVO;
 import com.example.demo.dto.RecipeVO;
 import com.example.demo.service.ProjectService;
@@ -332,22 +332,22 @@ public class ProjectController {
     @PostMapping("postProductionForm")
     public String postProductionForm(@RequestParam Map<String,Object> formData,Map<String,Object> materialinfo) {
     		log.info("formData",formData);
-    	ProductionPlanVO productionPlanVO = new ProductionPlanVO();
-    	productionPlanVO.setPd_writer((String)formData.get("pd_writer"));
-    	productionPlanVO.setPd_dept((String)formData.get("pd_dept"));
-    	productionPlanVO.setPd_startdate((String)formData.get("pd_startdate"));
-    	productionPlanVO.setPd_enddate((String)formData.get("pd_enddate"));
-    	productionPlanVO.setPd_name((String)formData.get("pd_name"));
-    	productionPlanVO.setPd_content((String)formData.get("pd_content"));
+    	ProductionVO productionVO = new ProductionVO();
+    	productionVO.setPd_writer((String)formData.get("pd_writer"));
+    	productionVO.setPd_dept((String)formData.get("pd_dept"));
+    	productionVO.setPd_startdate((String)formData.get("pd_startdate"));
+    	productionVO.setPd_enddate((String)formData.get("pd_enddate"));
+    	productionVO.setPd_name((String)formData.get("pd_name"));
+    	productionVO.setPd_content((String)formData.get("pd_content"));
     	
-    	projectService.insertProduction(productionPlanVO);
+    	projectService.insertProduction(productionVO);
     	
     	int num = (int) projectService.getfindLastProductionNumber();
     	//maxCount 추출
     	int maxCount = Integer.parseInt((String) formData.get("maxCount"));
     	System.out.println(maxCount);
     	
-    	List<PlandetailVO> list = new ArrayList<>();
+    	List<ProductionDetailVO> list = new ArrayList<>();
     
     	for(int i =1; i<=maxCount;i++) {
     		String itemNameKey = "item_name" + i ; 
@@ -359,9 +359,9 @@ public class ProjectController {
     			String itemName = (String) formData.get(itemNameKey);
     			int quantity = Integer.parseInt((String) formData.get(quantityKey));
     			
-    			PlandetailVO planVO = new PlandetailVO();
+    			ProductionDetailVO planVO = new ProductionDetailVO();
     			planVO.setPd_num(num);
-    			planVO.setPlandetail_name(itemName);
+    			planVO.setProduct_name(itemName);
     			planVO.setPlandetail_amount(quantity);
     			
     			list.add(planVO);
@@ -369,24 +369,24 @@ public class ProjectController {
     	}
     
     	list.forEach(planVO ->
-    		log.info("list -> Pd num: {}, Item Name: {},Quantity: {}",planVO.getPd_num(), planVO.getPlandetail_name(), planVO.getPlandetail_amount())
+    		log.info("list -> Pd num: {}, Item Name: {},Quantity: {}",planVO.getPd_num(), planVO.getProduct_name(), planVO.getPlandetail_amount())
     			);
     	
     	int r = projectService.setproductionForm(list);
     	/// 추가본
-    	int pd_num = num;		//pd_num의 값
-    	int pd_count = maxCount ;	//pd_num의 count값
-    	
-    	projectService.getMaterialName(pd_num);
-    	projectService.setMaterialName(materialinfo);
-    	
-    	List<ProductionPlanVO> materialList = new ArrayList<>();
-    	
-    	for(int i =1; i<=maxCount;i++) {
-    		ProductionPlanVO materialVO = new ProductionPlanVO();
-    		materialVO.setPlandetail_name(materialinfo.get(plandetail_name));
-    		
-    	}
+		/*
+		 * int pd_num = num; //pd_num의 값 int pd_count = maxCount ; //pd_num의 count값
+		 * 
+		 * projectService.getMaterialName(pd_num);
+		 * projectService.setMaterialName(materialinfo);
+		 * 
+		 * List<ProductionPlanVO> materialList = new ArrayList<>();
+		 * 
+		 * for(int i =1; i<=maxCount;i++) { ProductionPlanVO materialVO = new
+		 * ProductionPlanVO(); materialVO.setProduct_name(materialinfo.get());
+		 * 
+		 * }
+		 */
     	
     	
     	
@@ -427,7 +427,7 @@ public class ProjectController {
     @GetMapping("productionPlan")
     public String getproductionPlanList(Model model) {
  	   
- 	   List<ProductionPlanVO> list = projectService.getProductionPlanList();
+ 	   List<ProductionVO> list = projectService.getProductionList();
  	   model.addAttribute("getProductionPlanList", list);
  	  log.info("getProductionPlanList",list);
  	   return "productionPlan";
@@ -443,7 +443,7 @@ public class ProjectController {
     //facotry.html
     @GetMapping("factoryPlan")
     public String factoryPlan(Model model) {
-    	List<ProductionPlanVO> list = projectService.getProductionPlanList();
+    	List<ProductionVO> list = projectService.getProductionList();
     	model.addAttribute("getProductionPlanList", list);
     	  log.info("factoryPlan",list);
     	return "factoryPlan";
@@ -451,14 +451,14 @@ public class ProjectController {
     @GetMapping("getFactoryPlanDetail")
     public ModelAndView getFactoryPlanDetail(@RequestParam("pd_num") int pd_num) {
     	
-    	ProductionPlanVO productionPlanVO = new ProductionPlanVO();
-    	productionPlanVO = projectService.getFactoryPlanDetail(pd_num);
-    	List<ProductionPlanVO> productionPlanListVO = projectService.getFactoryPlanDetailList(pd_num);
-    	System.out.println(productionPlanListVO);
+    	ProductionVO productionPlanVO = new ProductionVO();
+    	productionPlanVO = projectService.getFactoryDetail(pd_num);
+    	List<ProductionVO> productionListVO = projectService.getFactoryDetailList(pd_num);
+    	System.out.println(productionListVO);
     	
     	mv = new ModelAndView();
     	mv.addObject("productionPlanVO",productionPlanVO);
-    	mv.addObject("productionPlanList",productionPlanListVO);
+    	mv.addObject("productionPlanList",productionListVO);
     	mv.setViewName("FactoryPlanDetail");
     	
     	System.out.println(mv);
