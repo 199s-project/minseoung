@@ -243,61 +243,6 @@
    set inven_amount = inven_amount - #{inven_amount} where inven_name = #{inven_name}
    
    </update>
-   <!-- 방금 생성된 pd_num을 갖고와라-->
-    <!--  
-   <select id="getfindLastProductionNumber" resultType="int">
-	select pd_num from plandetail order by pd_num desc limit 1;
-	</select>
-    갖고온 pd_num으로 plandetail의 plandetail_name,plandetail_amoun를 구하라-->
-       <!--
-   <select id="" parameterType="int" resultType="ProductionPlanVO">
-   select  plandetail_name,plandetail_amount from plandetail where pd_num = #{pd_num} 
-   </select>
-   plandetail_name과 recipe_name이 같은 recipe_num을 구하라 -->
-       <!--
-   <select id="" resultType="int">
-   select recipe_num  from  recipe , plandetail where recipe.recipe_name = plandetail.plandetail_name limit 1;
-   </select>
-    구한 recipe_num을 갖고 material_name과 material_amount를 구하라.  -->
-     <!--  
-   <select id="" parameterType="int" resultType="">
-   select material_name,material_amount from recipedetail where recipe_num = #{recipe_num};
-   </select>
-   for each 돌릴 수 count  -->
-       <!--
-   <select id="" >
-   select count(recipe_num) from recipedetail where recipe_num = #{recipe_num};
-   </select>
-  
-   -->
-   
-  <!-- product_name으로 recipe_num 조회 -->
-  <!--    <select id="findRecipeNumByProductName" resultType="int">
-        SELECT recipe_num
-        FROM recipe
-        WHERE product_name = #{productName}
-    </select>
-
-     recipe_num으로 recipedetail 정보 조회 -
-    <select id="findRecipeDetailsByRecipeNum" resultType="com.example.project.vo.RecipeDetailVO">
-        SELECT recipe_num, material_name, material_amount
-        FROM recipedetail
-        WHERE recipe_num = #{recipeNum}
-    </select>
-   -->
-    <!-- material_name으로 현재 재고 조회 
-    <select id="findInventoryByMaterialName" resultType="int">
-        SELECT inventory_amount
-        FROM inventorymaterial
-        WHERE invenmat_name = #{materialName}
-    </select>
--->
-    <!-- 재고 업데이트 
-    <update id="updateInventory">
-        UPDATE inventorymaterial
-        SET inventory_amount = #{inventoryAmount}
-        WHERE invenmat_name = #{materialName}
-    </update>
-   -->
+ 
    
 </mapper>
