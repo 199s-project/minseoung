@@ -15,7 +15,7 @@ public class RecipeVO {
 	
 	//recipedetail
 	private int rd_num;
-	private String meterial_name;
+	private String product_name;
 	private int material_amount;
 	private int meterial_price;
 	

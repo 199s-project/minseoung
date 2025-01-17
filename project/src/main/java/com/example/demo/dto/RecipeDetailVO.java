@@ -7,12 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Alias("RecipedetailVO")
-public class RecipedetailVO {
+@Alias("RecipeDetailVO")
+public class RecipeDetailVO {
 	
 	//recipedetail
 		private int rd_num;
-		private String meterial_name;
+		private String material_name;
 		private int material_amount;
 		private int meterial_price;
 		
