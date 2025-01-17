@@ -326,6 +326,11 @@ public class ProjectService {
 		
 		return projectDAO.reduceInventoryAmount(inventoryVO);
 	}
+
+	public int setPdCheckUpdate(ProductionVO productionVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.setPdCheckUpdate(productionVO);
+	}
 	
 	
 	// 추가분

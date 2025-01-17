@@ -95,6 +95,8 @@ public interface ProjectDAO {
 	List<RecipeDetailVO> getRecipeDetailListByRecipeNum(int recipe_num);
 	
 	int reduceInventoryAmount(InventoryVO inventoryVO);
+
+	int setPdCheckUpdate(ProductionVO productionVO);
 	
 	// 추가분
 

@@ -458,13 +458,13 @@ public class ProjectController {
     }
     
     @PostMapping("postFactoryDetail")
-    public String postFactoryDetail(@RequestParam Map<String,Object> formData) {
+    public String postFactoryDetail(@RequestParam Map<String,Object> formData,Model model) {
     	
-        Map<String,Object> itemData = formData.entrySet()
+          Map<String,Object> itemData = formData.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().contains("item_name"))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-          
+          System.out.println(formData);
           Optional<Integer> itemMaxNumber = itemData.keySet()
                 .stream()
                 .filter(key -> key.startsWith("item_name"))
@@ -473,6 +473,8 @@ public class ProjectController {
          
           
         int maxCount = itemMaxNumber.orElse(0);
+        
+        int pd_num =Integer.parseInt((String) formData.get("pd_num"));	//pd_num 갖고오기
         
     	int num = (int) projectService.getfindLastProductionNumber();
     	
@@ -503,8 +505,26 @@ public class ProjectController {
     			inventoryVO.setInven_name(Mname);
     			
     			int r = projectService.reduceInventoryAmount(inventoryVO);
+    			if( r > 0) {
+    				int check = 1;
+    				
+    				System.out.println("생산되었습니다.");
+    				ProductionVO productionVO = new ProductionVO();
+    				
+    				productionVO.setPd_check(pd_num);
+    				
+    				System.out.println(pd_num);
+    				
+    				projectService.setPdCheckUpdate(productionVO);
+    				
+    				
+    				return "redirect:factoryPlan";
+    			}else {
+    				int check =0;
+    				System.out.println("재고가 부족합니다. 재고를 확인후 생산 계획서를 수정해 주세요.");
+    				
+    			}
     		}
-    		
     	}
     		
     	return "redirect:factoryPlan";

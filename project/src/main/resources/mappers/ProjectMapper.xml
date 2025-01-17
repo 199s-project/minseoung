@@ -125,13 +125,13 @@
 	</select>
 	
 	<insert id="insertQuotationDetail" parameterType="QuotationDetailVO">
-		insert into quotationdetail (
-			quot_num, product_num, quotdetail_amount, quotdetail_price
-		) values (
-			#{quot_num}, #{product_num}, #{quotdetail_amount}, #{quotdetail_price}
-		)
+			insert into quotationdetail (
+				quot_num, product_num, quotdetail_amount, quotdetail_price
+			) values (
+				#{quot_num}, #{product_num}, #{quotdetail_amount}, #{quotdetail_price}
+			)
 	</insert>
-	
+		
 	
 	
 	
@@ -237,12 +237,31 @@
    select * from recipedetail where recipe_num = #{recipe_num};
    </select>
    
-   
-   <update id="reduceInventoryAmount" parameterType="InventoryVO">
+   <!-- 원본 -->
+  <update id="reduceInventoryAmount" parameterType="InventoryVO">
    update inventory 
-   set inven_amount = inven_amount - #{inven_amount} where inven_name = #{inven_name}
-   
-   </update>
- 
+   set inven_amount = inven_amount - #{inven_amount} where inven_name = #{inven_name} and inven_amount >= #{inven_amount}
+   </update> 
+ 	
+  <update id="setPdCheckUpdate" parameterType="ProductionVO"> 
+	update 	production
+	set pd_check = 1 where pd_num = #{pd_num}
+  </update>
+ 	
+ 	
+<!-- 	<update id="reduceInventoryAmount" parameterType="InventoryVO">
+	 update inventory 
+	 set inven_amount = inven_amount - #{inven_amount} where inven_name = #{inven_name} and inven_amount >= #{inven_amount}
+	 	<if test="0 > inven_amount">
+	 		
+	 	</if>
+	</update> -->
+
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
    
 </mapper>
