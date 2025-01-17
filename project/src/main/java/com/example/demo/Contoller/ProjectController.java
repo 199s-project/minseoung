@@ -506,7 +506,7 @@ public class ProjectController {
     			
     			int r = projectService.reduceInventoryAmount(inventoryVO);
     			if( r > 0) {
-    				int check = 1;
+    				
     				
     				System.out.println("생산되었습니다.");
     				ProductionVO productionVO = new ProductionVO();
@@ -520,7 +520,7 @@ public class ProjectController {
     				
     				return "redirect:factoryPlan";
     			}else {
-    				int check =0;
+    				
     				System.out.println("재고가 부족합니다. 재고를 확인후 생산 계획서를 수정해 주세요.");
     				
     			}
