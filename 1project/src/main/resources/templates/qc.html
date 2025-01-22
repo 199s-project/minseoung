@@ -2,7 +2,10 @@
 <html>
 <head>
 <title>품질 관리 test 22</title>
-
+<style>
+.hidden_row {
+	display:none;
+}</style>
 </head>
 <body>
 	<div th:replace="~{/include/header}"></div>
@@ -58,6 +61,7 @@
 							<tbody>
 								<th:block th:each="qc,stat: ${QcList}">									
 									<tr th:onclick="'location.href=\'/qcDetail?qc_num=' + ${qc.qc_num} + '\''">
+										<td class="hidden_row"></td>
 									    <td><th:block th:text="${qc.qc_num}"></th:block></td> 
 									    <td><th:block th:text="${qc.qc_reg}"></th:block></td>
 										<td><th:block th:text="${qc.qc_type}"></th:block></td>

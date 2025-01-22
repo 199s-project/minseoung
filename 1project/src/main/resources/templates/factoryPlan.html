@@ -109,14 +109,14 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
                         </tr>
                      </thead>
                      <tbody>
-                        <th:block th:each="form,stat: ${getProductionPlanList}">
+                        <th:block th:each="form,stat: ${getFatoryWorkList}">
                            <tr>
                            	  <td class="hidden_row"></td>
                               <td><th:block th:text="${stat.size-stat.index}"></th:block></td> 
                               <td><th:block th:text="${form.pd_writer}"></th:block></td>
                               <td><a th:href="@{getFactoryDetail(pd_num=${form.pd_num})}"><th:block th:text="${form.pd_name}"></th:block></a></td>
                               <td><th:block th:text="${form.pd_writedate}"></th:block></td>
-                              <td><th:block th:if="${form.pd_check == 0}" th:text="'추가된 업무'"></th:block></td>
+                              <td><th:block th:if="${form.pd_check == 0}"><span class="badge badge-success" th:text="'추가된 업무'"></span></th:block></td>
                            </tr>
                         </th:block>
                      </tbody>

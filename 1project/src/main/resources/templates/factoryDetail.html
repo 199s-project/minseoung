@@ -105,6 +105,9 @@
 	 	border-left: none;
 	    border-right: none;
 	}
+.hidden_row {
+   display:none;
+}
 </style>
 
 
@@ -150,16 +153,21 @@ document.addEventListener("DOMContentLoaded", () => {
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h4>DataTable</h4>
+						<h4>DataTable</h4>
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">생산 계획서</li>
+									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
 								</ol>
 							</nav>
+						</div>
+						<div class="col-md-6 col-sm-12 text-right">
+								<div class="dt-buttons btn-group flex-wrap">    
+									<button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>CSV</span></button> 
+									<button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>PDF</span></button> 
+									<button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>Print</span></button>
 								</div>
-							  </div> 
 							</div>
 						</div>
 					</div>
@@ -170,14 +178,9 @@ document.addEventListener("DOMContentLoaded", () => {
 				<div style="padding: 70px;">
 				<div style="border: 1px solid black; width: 1200px; padding: 60px 120px; margin: 0 auto;">
 				<div class="pb-20">
-						<div class="dt-buttons btn-group flex-wrap">    
-								<button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>CSV</span></button> 
-								<button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>PDF</span></button> 
-								<button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>Print</span></button>
-						</div>
+					
 				</div>
 				    <div class="title" style="padding: 30px 0 40px 0; font-size: 40px;">생산 계획서</div>
-				
 					<table style=" border-top: none; border-bottom: none; border-left: none; border-right: none;">
 						<tr>
 							<td class="hidden_box"colspan="10"></td>
@@ -198,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					        <td class="heading-section">부서명</td>
 					        <td colspan="10"><th:block th:text="${productionVO.pd_dept}"></th:block></td>
 					    </tr>
-					   
+					   	
 					     <tr>
 					        <td class="heading-section" width="15%">생산 시작일</td>
 					        <td colspan="5"><th:block th:text="${productionVO.pd_startdate}"></th:block></td>
@@ -213,12 +216,13 @@ document.addEventListener("DOMContentLoaded", () => {
 					        <th class="heading-section">물품명</th>
 					        <th class="heading-section" width="15%">수량(ea)</th>
 					    </tr>
-					 
+					 	
 					    <tr th:each="productiondetailVO,stat : ${productionList}">
 					        <td><th:block th:text="${stat.count}"></th:block></td>
 					        <td class="item_name"><th:block th:id="'item_name' + ${stat.count}" th:name="'item_name'+${stat.count}" th:text="${productiondetailVO.product_name}"></th:block></td>
 					        <td class="quantity"><th:block th:id="'quantity' + ${stat.count}" th:name="'quantity' + ${stat.count}" th:text="${productiondetailVO.productiondetail_amount}"></th:block></td>
 					    	
+					    	<input type="hidden" th:id="pd_num" th:name="pd_num" th:value="${productiondetailVO.pd_num}">
 					    	<input type="hidden" th:id="'item_name' + ${stat.count}" th:name="'item_name'+${stat.count}" th:value="${productiondetailVO.product_name}">
 					    	<input type="hidden" th:id="'quantity' + ${stat.count}" th:name="'quantity' + ${stat.count}" th:value="${productiondetailVO.productiondetail_amount}">
 					    	

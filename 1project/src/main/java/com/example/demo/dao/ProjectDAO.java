@@ -133,6 +133,8 @@ public interface ProjectDAO {
 	// ---------------------김민성---------------------------------
 	
 	List<ProductionVO> getProductionList();
+	
+	List<ProductionVO> getFatoryWorkList();
 
 	int insertProductiondetail(List<ProductionDetailVO> list);
 
@@ -140,7 +142,7 @@ public interface ProjectDAO {
 
 	int getfindLastProductionNumber();
 
-	List<ProductionVO> getFatoryWorkList();
+	
 
 	List<ProductionVO> getFactoryDetailList(int pd_num);
 
@@ -224,6 +226,10 @@ public interface ProjectDAO {
    int addProductInventory(InventoryVO inventoryVO);
 
    int setPdCheckUpdate(ProductionVO productionVO);
+
+   ProductVO getfindProductNum(ProductVO productVO);
+
+int insertQuotationCode(int quot_num, String code);
    
 // new 작업공간 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이의재 끝   
    

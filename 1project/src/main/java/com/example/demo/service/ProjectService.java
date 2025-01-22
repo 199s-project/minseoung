@@ -431,7 +431,40 @@ public class ProjectService {
 	public int updateQuotationStat(int quot_num) {
 		return projectDAO.updateQuotationStat(quot_num);
 	}
-	
+	public QuotationVO getQuotationByQuotnum(int quot_num) {
+		// TODO Auto-generated method stub
+		return projectDAO.getQuotationByQuotnum(quot_num);
+	}
+
+	public List<QuotationDetailVO> getQuotationDetailListByQuotnum(int quot_num) {
+		// TODO Auto-generated method stub
+		return projectDAO.getQuotationDetailListByQuotnum(quot_num);
+	}
+
+	public CompanyVO getCompanyByCompanynum(int company_num) {
+		// TODO Auto-generated method stub
+		return projectDAO.getCompanyByCompanynum(company_num);
+	}
+
+	public int insertQuotation(QuotationVO quotationVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.insertQuotation(quotationVO);
+	}
+
+	public int getLastQuotationNum() {
+		// TODO Auto-generated method stub
+		return projectDAO.getLastQuotationNum();
+	}
+
+	public int insertQuotationCode(int quot_num, String code) {
+		// TODO Auto-generated method stub
+		return projectDAO.insertQuotationCode(quot_num,code);
+	}
+
+	public int insertQuotationDetail(QuotationDetailVO quotationDetailVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.insertQuotationDetail(quotationDetailVO);
+	}		
 	
 // 윤호자리 @@@@@@@@@@@@@@윤호윤호@@@@@@@@@@  @@@@@@@@@@@@@@윤호윤호@@@@@@@@@@
 	
@@ -598,8 +631,8 @@ public class ProjectService {
 	
 	public List<ProductionVO> getProductionList() {
 		// TODO Auto-generated method stub
-		log.info("getFatoryWorkList()");
-		return projectDAO.getFatoryWorkList();
+		log.info("getProductionList()");
+		return projectDAO.getProductionList();
 	}
 	
 	public int setproductionForm(List<ProductionDetailVO> list) {
@@ -643,8 +676,25 @@ public class ProjectService {
 	public int setPdCheckUpdate(ProductionVO productionVO) {
 		// TODO Auto-generated method stub
 		return projectDAO.setPdCheckUpdate(productionVO);
-	}		
-		
+	}
+
+	public int insertqc(QcVO qcVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.insertqc(qcVO);
+	}
+
+	public List<ProductionVO> getFatoryWorkList() {
+		// TODO Auto-generated method stub
+		return projectDAO.getFatoryWorkList();
+	}
+
+	public ProductVO getfindProductNum(ProductVO productVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.getfindProductNum(productVO);
+	}
+
+
+			
 		
 		
 // ---------------------김민성---------------------------------	
