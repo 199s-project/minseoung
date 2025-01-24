@@ -122,8 +122,8 @@ function addrow() {
 	elem.classList.add('added-row'+count);
 	elem.innerHTML = `
         <td class="rownum">`+count+`</td>
-        <td><input type="text" name="item_name` + count + `"></td>
-        <td><input type="number" name="quantity` + count + `" class="amount-number" min=1 value=1></td>
+        <td><input type="text" id="item_name` + count + `" name="item_name` + count + `" placeholder="제품명을 입력하세요." onchange="rowproductChange(event)"></td>
+        <td><input type="number" id="quantity` + count + `" name="quantity` + count + `" class="amount-number"  onchange="rowquantityChange(event)" min=1 value=1></td>
 	`;
 	count++;
 	document.querySelector(".products").appendChild(elem);
@@ -147,6 +147,58 @@ async function addProductList(event){
 }
 
 
+async function productChangeGeneric(inputId, item_name) {
+	const product_name = item_name;
+    const response = await fetch(`/getProductByProductName?product_name=${product_name}`);
+    const product = await response.json();
+    
+    // inputId에서 숫자 추출
+    const index = inputId.match(/\d+$/)[0];
+
+    // 해당 index에 맞는 다른 필드 값 설정
+    document.getElementById(`unit_price` + index).value = product.product_price;
+    
+    const total_price = document.getElementById(`quantity` + index).value * product.product_price;
+    
+    document.getElementById(`total_price` + index).value = total_price;
+    
+    paymentCalculation();
+
+}
+
+
+
+
+ async function rowquantityChange(event) {
+    const currentInput = event.target;
+    const currentId = currentInput.id;
+    const currentAmount = currentInput.value.trim();
+    const count = currentId.replace('quantity', '');
+    const item_name = document.getElementById(`item_name${count}`).value;
+    const response = await fetch(`/getInventoryByProductName?product_name=${item_name}&amount=${currentAmount}`);
+    
+    // const response = await fetch(`/getInventoryByProductName?product_name=${item_name}`);
+    //const inventory = await response.json();
+    const recipes = await response.json();
+    
+    recipes.forEach(recipe => {
+        if (recipe.material_amount < 0) {
+            hasError = true; // 재고 부족이 있음을 표시
+            Swal.fire({
+                icon: 'error',
+                title: '재고가 부족합니다.',
+                text: `${item_name}: ${recipe.material_name}의 재고가 부족합니다.`,
+            });
+        }
+    });
+    if (hasError) {
+        const firstNegativeRecipe = recipes.find(recipe => recipe.material_amount < 0);
+        if (firstNegativeRecipe) {
+            // 부족한 재고의 최대 허용 가능한 값으로 조정
+            currentInput.value = Math.floor(firstNegativeRecipe.material_amount / currentAmount);
+        }
+    }
+}
 
 </script>
 
@@ -212,11 +264,11 @@ async function addProductList(event){
 					   
 					     <tr>
 					        <td class="heading-section" width="15%">생산 시작일</td>
-					        <td colspan="3"><input type="date" id="pd_startdate" name="pd_startdate" size="60"></td>
+					        <td colspan="3"><input type="date" id="pd_startdate" name="pd_startdate" size="60" required></td>
 					    </tr>
 					     <tr>
 					        <td class="heading-section" width="15%">생산 마감일</td>
-					        <td colspan="3"><input type="date" id="pd_enddate" name="pd_enddate" size="60"></td>
+					        <td colspan="3"><input type="date" id="pd_enddate" name="pd_enddate" size="60" required></td>
 					    </tr>
 					</table>
 					
@@ -231,8 +283,8 @@ async function addProductList(event){
 					    </tr>
 					    <tr class="added-row1">
 					        <td style="text-align: right; padding-right: 15px;">1</td>
-					        <td><input type="text" id = "item_name1"name="item_name1"></td>
-					        <td><input type="number" id="quantity1"name="quantity1" class="amount-number" min=1 value=1 style="text-align: right;"></td>
+					        <td><input type="text" id = "item_name1"name="item_name1" placeholder="제품명을 입력하세요." onchange="rowproductChange(event)" required></td>
+					        <td><input type="number" id="quantity1"name="quantity1" class="amount-number" onchange="rowquantityChange(event)" min=1 value=1  required style="text-align: right;"></td>
 					    </tr>
 
 					    <!-- Add more rows as needed -->
@@ -241,11 +293,11 @@ async function addProductList(event){
 					<table class="input-auto-size">
 					     <tr>
 					        <td class="heading-section">생산 목적</td>
-					        <td colspan="3"><input type="text" id="pd_name" name="pd_name" size="60"></td>
+					        <td colspan="3"><input type="text" id="pd_name" name="pd_name" size="60" required></td>
 					    </tr>
 					    <tr>
 					        <td class="heading-section" style="text-align: center;">비고</td>
-					        <td><textarea id="pd_content" name="pd_content" rows="10" style="width: 100%;"></textarea></td>
+					        <td><textarea id="pd_content" name="pd_content" rows="10" style="width: 100%;" required></textarea></td>
 					    </tr>
 					</table>
 					<button type="submit" value="제출하기" class="btn btn-primary m-2 rowbtn">제출</button>

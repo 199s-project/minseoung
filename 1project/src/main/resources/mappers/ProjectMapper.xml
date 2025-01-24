@@ -378,6 +378,54 @@
 		INNER JOIN productiondetail ON product.product_name = productiondetail.product_name
 		where productiondetail.product_name = #{product_name} LIMIT 1;
 	</select>
+	<!-- 윤호 가 짠거 -->
+	<select id="getInventoryByProductName" parameterType="InventoryVO">
+	select inven_amount from inventory where inven_name = #{product_name}
+	</select>
+	<!-- 김민성 버젼 -->
+	<select id="getTotalAmount" parameterType="RecipeDetailVO">
+	select material_name, material_amount from recipe,recipedetail where recipe.recipe_num = recipedetail.recipe_num and recipe.product_name = #{product_name};
+	</select>
+	
+	<select id="getInvenAmount" parameterType="InventoryVO">
+	select inven_amount from inventory where inven_type = 0 and inven_name = #{inven_name} ;
+	</select>
+	
+	<select id="getInventoryList" resultType="InventoryVO">
+		select * from inventory	where inven_type=0;
+	</select>
+	
+	<select id="getProductionVO" parameterType="ProductionVO" >
+		select * from production where pd_num = #{pd_num}
+	</select>
+	
+	<select id="getProductionDetail" parameterType="ProductionDetailVO" >
+		select * from productiondetail where pd_num = #{pd_num}
+	</select>
+	
+	
+	<select id="getRecipeList" parameterType="RecipeDetailVO" >
+		select * from recipedetail
+	</select>
+	
+	<!-- ==============================추가분 -->
+	<select id="getProductionListByFactoryDetail" parameterType="ProductionDetailVO">
+	select product_name , productiondetail_amount from productiondetail where
+	pd_num = #{pd_num};
+	</select>
+	
+	<select id="getFindRecipeNum" parameterType="String">
+		select recipe_num from recipe where product_name = #{product_name}	
+	</select>
+	
+	<select id="getFindInvenList" parameterType="ProductionDetailVO">
+		   SELECT * FROM inventory WHERE inven_name IN
+    	<foreach collection="ProductionList" item="product_name" open="(" separator="," close=")">
+      	  #{product_name}
+    	</foreach>
+	</select>
+	
+	
 	
 	
 <!-- 김민성 ========================================================================================= -->	

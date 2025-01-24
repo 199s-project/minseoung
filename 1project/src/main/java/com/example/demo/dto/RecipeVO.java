@@ -10,7 +10,6 @@ import lombok.Setter;
 @Alias("RecipeVO")
 public class RecipeVO {
 	private int recipe_num;
-	private String recipe_name;
 	private int recipe_price;
 	
 	//recipedetail
@@ -18,9 +17,15 @@ public class RecipeVO {
 	private String product_name;
 	private int material_amount;
 	private int meterial_price;
+	private String material_name;
+	
+	
 	
 	private int total_material_price;
 	private int total_material_amount;
 	private int total_recipe_price;
+	
+	// 추가
+	private int inven_amount;
 	
 }

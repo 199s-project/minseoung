@@ -22,6 +22,7 @@ import com.example.demo.dto.QcVO;
 import com.example.demo.dto.QuotationDetailVO;
 import com.example.demo.dto.QuotationVO;
 import com.example.demo.dto.RecipeDetailVO;
+import com.example.demo.dto.RecipeVO;
 
 @Mapper
 public interface ProjectDAO {
@@ -230,6 +231,24 @@ public interface ProjectDAO {
    ProductVO getfindProductNum(ProductVO productVO);
 
 int insertQuotationCode(int quot_num, String code);
+
+InventoryVO getInventoryByProductName(String product_name);
+
+List<RecipeDetailVO> getTotalAmount(String product_name);
+
+List<InventoryVO> getInventoryList();
+
+List<ProductionDetailVO> getProductionDetail(int pd_num);
+
+List<RecipeDetailVO> getRecipeList();
+
+InventoryVO getInvenAmount(String Mname);
+
+List<ProductionDetailVO> getProductionListByFactoryDetail(int pd_num);
+
+int getFindRecipeNum(String product_name);
+
+List<InventoryVO> getFindInvenList(String product_name);
    
 // new 작업공간 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이의재 끝   
    

@@ -27,6 +27,7 @@ import com.example.demo.dto.QcVO;
 import com.example.demo.dto.QuotationDetailVO;
 import com.example.demo.dto.QuotationVO;
 import com.example.demo.dto.RecipeDetailVO;
+import com.example.demo.dto.RecipeVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
@@ -692,6 +693,53 @@ public class ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.getfindProductNum(productVO);
 	}
+
+	public InventoryVO getInventoryByProductName(String product_name) {
+		// TODO Auto-generated method stub
+		return projectDAO.getInventoryByProductName(product_name);
+	}
+
+	public List<RecipeDetailVO> getTotalAmount(String product_name) {
+		// TODO Auto-generated method stub
+		return projectDAO.getTotalAmount(product_name);
+	}
+
+	public List<InventoryVO> getInventoryList() {
+		// TODO Auto-generated method stub
+		return projectDAO.getInventoryList();
+	}
+
+	public List<ProductionDetailVO> getProductionDetail(int pd_num) {
+		// TODO Auto-generated method stub
+		return projectDAO.getProductionDetail(pd_num);
+	}
+
+	public List<RecipeDetailVO> getRecipeList() {
+		// TODO Auto-generated method stub
+		return projectDAO.getRecipeList();
+	}
+
+	public  InventoryVO getInvenAmount(String Mname) {
+		// TODO Auto-generated method stub
+		return projectDAO.getInvenAmount(Mname);
+	}
+
+	public List<ProductionDetailVO> getProductionListByFactoryDetail(int pd_num) {
+		// TODO Auto-generated method stub
+		return projectDAO.getProductionListByFactoryDetail(pd_num);
+	}
+
+	public int getFindRecipeNum(String product_name) {
+		// TODO Auto-generated method stub
+		return projectDAO.getFindRecipeNum(product_name);
+	}
+
+	public List<InventoryVO> getFindInvenList(String product_name) {
+		// TODO Auto-generated method stub
+		return projectDAO.getFindInvenList(product_name);
+	}
+
+	
 
 
 			
