@@ -161,7 +161,7 @@
                   <span class="user-icon">
        <!--               <img src="vendors/images/photo1.jpg" alt=""> -->
                   </span>
-                  <a th:if="${member != null or member.member_name ==null}" class="user-name" th:text="${member.member_name}"></a>
+                  <a th:if="${member != null or member.member_name }" class="user-name" th:text="${member.member_name}"></a>
 				  <a th:if="${member == null or member.member_name == null}" class="user-name" th:text="'로그인'" th:href="@{/login}"></a>
                </a>
                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
