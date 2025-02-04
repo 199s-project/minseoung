@@ -1059,15 +1059,29 @@ public class ProjectController {
 	}
 
 	// facotry.html 다시 옮길것
-	 
+	//0204김민성
 	@GetMapping("factoryPlan")
-	public String factoryPlan(Model model) {
+	public String factoryPlan(Model model,HttpSession session) {
 		List<ProductionVO> list = projectService.getFatoryWorkList();
+		MemberVO member = (MemberVO)session.getAttribute("user");
 		model.addAttribute("getFatoryWorkList", list);
+		/* model.addAttribute(member); */
 		log.info("factoryPlan", list);
 		return "factoryPlan";
+		
 	}
-
+	//0204 김민성
+	@GetMapping("feedBackList")
+	public String feedBackList(Model model,HttpSession session) {
+		List<ProductionVO> list = projectService.getFatoryWorkList1();
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		model.addAttribute("getFatoryWorkList1", list);
+		model.addAttribute(member);
+		log.info("factoryPlan", list);
+		return "feedBackList";
+	}
+	
+	//0204김민성
 	@GetMapping("getFactoryDetail")
 	public ModelAndView getFactoryDetail(@RequestParam("pd_num") int pd_num,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
@@ -1075,11 +1089,8 @@ public class ProjectController {
 		
 		MemberVO member = (MemberVO)session.getAttribute("user");
 		
-		if(member ==null) {
-			mv.setViewName("login");
-			return mv;
-		}
-		if("생산".equals(member.getMember_dept())) {
+
+	
 			
 			
 			ProductionVO productionVO = new ProductionVO();
@@ -1093,11 +1104,7 @@ public class ProjectController {
 			mv.setViewName("factoryDetail");
 			mv.addObject("member",member);
 			return mv;
-		}
-		else {
-			mv.setViewName("login");
-			return mv;
-		}
+		
 		
 	}
 
@@ -1183,7 +1190,6 @@ public class ProjectController {
 		log.info("pd_num: {}", pd_num);
 		MemberVO member = (MemberVO)session.getAttribute("user");//session
 		
-		
 		QcVO qc = new QcVO();
 		ProductVO productVO = new ProductVO();
 		ProductionVO productionVO = new ProductionVO(); 
@@ -1217,7 +1223,6 @@ public class ProjectController {
 				inven.setInven_name(Material_name);
 				RecipeTotalList.add(inven);
 			}	
-				
 				List<InventoryVO> list = projectService.getFindInvenList();
 				log.info(product_name);
 				int listSize = list.size();
@@ -1248,11 +1253,6 @@ public class ProjectController {
 				}
 			}// for 끝나는 부분 원자재 수 기준
 		}//for 끝나는부분 제품 수 기준
-		
-		
-		
-		
-		
 		List<InventoryVO> exam = projectService.getFindInvenList();
 		for (InventoryVO lists : exam) { 
 		    for (InventoryVO finalInven : FinalInven) { 
@@ -1307,13 +1307,36 @@ public class ProjectController {
 		
 		productionVO.setPd_num(pd_num);
 		
-		
-		
 		 
 		int pd_check = projectService.setPdCheckUpdate(productionVO);
 		System.out.println("생산 성공");
 		return 2;
 	}
+	
+	//0204 김민성
+	@ResponseBody
+	@PostMapping("postFeedback")
+	public int postFeedback(@RequestParam("pd_num")int pd_num)throws Exception  {
+	ProductionVO productionVO = new ProductionVO();
+	log.info("pd_num {}",pd_num);
+	productionVO.setPd_num(pd_num);
+	
+	int pd_check = projectService.setPdCheckUpdate2(productionVO);
+	
+	return 1;	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

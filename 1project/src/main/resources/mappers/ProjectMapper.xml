@@ -328,7 +328,11 @@
 	<select id="getFatoryWorkList" resultType="ProductionVO">
 		select * from production where pd_check = 0;
 	</select>
-		
+	
+	<select id="getFatoryWorkList1" resultType="ProductionVO">
+		select * from production where pd_check = 2;
+	</select>	
+	
 	<insert id="insertProduction" parameterType="ProductionVO">
 		insert into production (pd_writedate,pd_writer,pd_dept,pd_startdate,pd_enddate,pd_name,pd_content,pd_check)
 		values (now(),#{pd_writer},#{pd_dept},#{pd_startdate},#{pd_enddate},#{pd_name},#{pd_content},0)
@@ -376,7 +380,11 @@
 	update 	production
 	set pd_check = 1 where pd_num = #{pd_num}
   </update>
- 	   
+  <!-- 0204 김민성 -->
+  <update id="setPdCheckUpdate2" parameterType="ProductionVO"> 
+	update 	production
+	set pd_check = 2 where pd_num = #{pd_num}
+  </update>
 	<select id="getfindProductNum" parameterType="ProductVO" resultType="ProductVO">
 		SELECT 
     	product.product_num FROM product

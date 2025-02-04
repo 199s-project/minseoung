@@ -158,11 +158,11 @@
          <div class="user-info-dropdown">
             <div class="dropdown">
                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                  <span class="user-icon">
-       <!--               <img src="vendors/images/photo1.jpg" alt=""> -->
-                  </span>
-                  <a th:if="${member != null or member.member_name }" class="user-name" th:text="${member.member_name}"></a>
-				  <a th:if="${member == null or member.member_name == null}" class="user-name" th:text="'로그인'" th:href="@{/login}"></a>
+              <!--     <span class="user-icon">
+             <img src="vendors/images/photo1.jpg" alt=""> 
+                  </span> -->
+                 <!--  <span th:if="${member != null or member.member_name }" class="user-name" th:text="${member.member_name}"></span>
+				  <a th:if="${member == null or member.member_name == null}" class="user-name" th:text="'로그인'" th:href="@{/login}"></a> -->
                </a>
                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                   <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
@@ -303,8 +303,9 @@
                      <span class="micon dw dw-invoice"></span><span class="mtext">김민성(생산)</span>
                   </a>
                   <ul class="submenu">
-                 	 <li><a href="factoryPlan">업무 일지</a></li>
+                 	 <li><a href="factoryPlan">생산 업무</a></li>
                  	 <li><a href="productionPlan">생산 계획서</a></li>
+                 	 <li><a href="feedBackList">생산 요청서</a></li>
                   </ul>
                </li>
               

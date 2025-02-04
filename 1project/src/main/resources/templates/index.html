@@ -162,6 +162,9 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
     					  <th:block th:if="${list.pd_check == 1}">
         					<span class="badge badge-primary" th:text="'생산 완료'"></span>
     					 </th:block>
+    					  <th:block th:if="${list.pd_check == 2}">
+   						    <span class="badge badge-warning" th:text="'생산 요청'"></span>
+						  </th:block>
 						 </td>
              	       </tr>
            	     </th:block>

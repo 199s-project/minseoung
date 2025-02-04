@@ -252,6 +252,10 @@ public interface ProjectDAO {
 	ProductVO getProductDetail(int product_num);
    
 	List<FileVO> getProductImages(int product_num);
+
+	int setPdCheckUpdate2(ProductionVO productionVO);
+
+	List<ProductionVO> getFatoryWorkList1();
 	
 
 // new 작업공간 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이의재 시작

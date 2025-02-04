@@ -30,15 +30,19 @@ public class HomeController {
 	
 	//0203 김민성
 	@GetMapping("/")
-    public String Home(Model model,HttpSession session){
+    public String Home(Model model, HttpSession session){
 		MemberVO member = (MemberVO)session.getAttribute("user");
-		
         log.info("Home");
-        
-        List<ProductionVO> list = projectService.getLastProduction();
-        model.addAttribute("list", list); 
-        model.addAttribute(member);
-        return "index";
+        if(member != null) {
+        	List<ProductionVO> list = projectService.getLastProduction();
+        	model.addAttribute("list", list); 
+        	model.addAttribute(member);
+        	return "index";
+        }else {
+        	List<ProductionVO> list = projectService.getLastProduction();
+        	model.addAttribute("list", list); 
+        	return "index";
+        }
     }
 	
 	//0203 김민성

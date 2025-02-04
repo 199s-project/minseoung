@@ -760,6 +760,16 @@ public class ProjectService {
 		return projectDAO.getLastProduction();
 	}
 
+	public int setPdCheckUpdate2(ProductionVO productionVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.setPdCheckUpdate2(productionVO);
+	}
+
+	public List<ProductionVO> getFatoryWorkList1() {
+		// TODO Auto-generated method stub
+		return projectDAO.getFatoryWorkList1();
+	}
+
 			
 		
 		
