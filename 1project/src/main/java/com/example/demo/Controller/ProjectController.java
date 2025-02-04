@@ -3,12 +3,14 @@ package com.example.demo.Controller;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -1024,18 +1026,9 @@ public class ProjectController {
 
 	// 생산계획서 목록 화면 이동
 	@GetMapping("productionPlan")
-	public String getproductionPlanList(Model model,HttpSession session) {
+	public String getproductionPlanList(Model model) {
 		//추가된 부분 
-		MemberVO member =(MemberVO)session.getAttribute("user");
-		/*
-		 * if(member==null) {
-		 * 
-		 * return "login"; } if("생산".equals(member.getMember_dept())){
-		 * List<ProductionVO> list = projectService.getProductionList();
-		 * model.addAttribute("getProductionPlanList", list);
-		 * log.info("getProductionPlanList", list); return "productionPlan"; } else {
-		 * return "productionPlan"; }
-		 */
+		
 		List<ProductionVO> list = projectService.getProductionList();
 		model.addAttribute("getProductionPlanList", list);
 		log.info("getProductionPlanList", list);
@@ -1077,15 +1070,17 @@ public class ProjectController {
 
 	@GetMapping("getFactoryDetail")
 	public ModelAndView getFactoryDetail(@RequestParam("pd_num") int pd_num,HttpSession session) {
-		
+		ModelAndView mv = new ModelAndView();
 		//추가된 부분 
 		
 		MemberVO member = (MemberVO)session.getAttribute("user");
+		
 		if(member ==null) {
 			mv.setViewName("login");
 			return mv;
 		}
 		if("생산".equals(member.getMember_dept())) {
+			
 			
 			ProductionVO productionVO = new ProductionVO();
 			productionVO = projectService.getFactoryDetail(pd_num);
@@ -1184,25 +1179,36 @@ public class ProjectController {
 	
 	@ResponseBody
 	@PostMapping("postFactoryDetail")
-	public int postFactoryDetail(@RequestParam("pd_num")int pd_num) {
-		log.info(pd_num+"");
+	public int postFactoryDetail(@RequestParam("pd_num")int pd_num,HttpSession session)throws Exception  {
+		log.info("pd_num: {}", pd_num);
+		MemberVO member = (MemberVO)session.getAttribute("user");//session
+		
+		
+		QcVO qc = new QcVO();
+		ProductVO productVO = new ProductVO();
+		ProductionVO productionVO = new ProductionVO(); 
+		 
 		List<InventoryVO> FinalInven = new ArrayList<>();
+		InventoryVO inven1 = new InventoryVO();
 		List<ProductionDetailVO> ProductionList = projectService.getProductionListByFactoryDetail(pd_num);
 		int ProductionListSize = ProductionList.size();
 		
-		for(int i = 1; i<=ProductionListSize;i++) {
-			String product_name = ProductionList.get(i-1).getProduct_name();
-			int productiondetail_amount = ProductionList.get(i-1).getProductiondetail_amount();
+		System.out.println("ProductionListSize"+ProductionListSize);
+		for(int i = 0; i< ProductionListSize;i++) {
+			String product_name = ProductionList.get(i).getProduct_name(); 
+			int productiondetail_amount = ProductionList.get(i).getProductiondetail_amount();
 			int recipe_num = projectService.getFindRecipeNum(product_name);
 			
 			List<InventoryVO> RecipeTotalList = new ArrayList<>();
-			
+			System.out.println("recipe_num"+recipe_num);
 			List<RecipeDetailVO> RecipeList = projectService.getRecipeDetailListByRecipeNum(recipe_num);
-			int RecipeListSize =RecipeList.size();
+			int RecipeListSize = RecipeList.size();
+			log.info("RecipeList size for product {}: {}", product_name, RecipeListSize);
 			
-			for(int l =1; l <=RecipeListSize;l++) {
-				int Material_amount = RecipeList.get(l-1).getMaterial_amount();
-				String Material_name = RecipeList.get(l-1).getMaterial_name();
+			
+			for(int l =0; l < RecipeListSize;l++) {
+				int Material_amount = RecipeList.get(l).getMaterial_amount();
+				String Material_name = RecipeList.get(l).getMaterial_name();
 				
 				int TotalAmount = Material_amount * productiondetail_amount;
 				InventoryVO inven = new InventoryVO();
@@ -1210,50 +1216,104 @@ public class ProjectController {
 				inven.setInven_amount(TotalAmount);
 				inven.setInven_name(Material_name);
 				RecipeTotalList.add(inven);
+			}	
 				
-			}
-			List<InventoryVO> list = projectService.getFindInvenList(product_name);
-			int listSize = list.size();
-			for(int k =1; k <= listSize; k++) {
-				int totalamount = RecipeList.get(k-1).getMaterial_amount();
-				String Mname = RecipeList.get(k-1).getMaterial_name();
-				
-				int Inven_amount =list.get(k-1).getInven_amount();
-				String Inven_name = list.get(k-1).getInven_name();
-				
-				if(Mname.equals(Inven_name)) {
-					int Total = Inven_amount - totalamount;
-					if( Total <= Inven_amount) {
-						InventoryVO inven = new InventoryVO();
+				List<InventoryVO> list = projectService.getFindInvenList();
+				log.info(product_name);
+				int listSize = list.size();
+				for(int k =0; k < listSize; k++) {
+					int Inven_amount =list.get(k).getInven_amount();
+					String Inven_name = list.get(k).getInven_name();
+					inven1.setInven_amount(Inven_amount);
 						
-						inven.setInven_amount(Total);
-						inven.setInven_name(Inven_name);
-						FinalInven.add(inven);
-					}else {
-						return 1; //재고 부족
-					}
+						for(int j = 0; j<RecipeListSize; j++ ) {
+							String Mname = RecipeTotalList.get(j).getInven_name();
+							int totalamount = RecipeTotalList.get(j).getInven_amount();
+							System.out.println("3");
+							if(Mname.equals(Inven_name)) {
+								
+								int Total = Inven_amount - totalamount;
+								
+								System.out.println("4");
+								if( Total < 0) {
+									return 1; //재고 부족
+								}else {
+									
+									inven1.setInven_amount(Total);
+									inven1.setInven_name(Inven_name);
+									System.out.println("5");
+									FinalInven.add(inven1);
+								}
+						}
 				}
 			}// for 끝나는 부분 원자재 수 기준
 		}//for 끝나는부분 제품 수 기준
-		for(InventoryVO LastInven : FinalInven) { //fianlInven 이 vo LastInven으로 for 를 돌린다.
-		int r = projectService.reduceInventoryAmount(LastInven);
-		}
-		return 2; //완료
-	}
-	
-	
-	
-	
-	
-	// 입력한 회사명으로 해당 회사의 정보들을 불러오는 과정
 		
-	
-	
-	
-	
-	
-	
-	
+		
+		
+		
+		
+		List<InventoryVO> exam = projectService.getFindInvenList();
+		for (InventoryVO lists : exam) { 
+		    for (InventoryVO finalInven : FinalInven) { 
+		        // 두 배열의 inven_name이 같은 경우 처리
+		        if (finalInven.getInven_name().equals(lists.getInven_name())) { 
+		        	
+		        	
+		            // 최신화: exam의 inven_amount에서 FinalInven의 inven_amount를 빼기
+		            int updatedAmount = lists.getInven_amount() - finalInven.getInven_amount(); 
+		            
+		            
+		            // 음수 방지
+		            if (updatedAmount < 0) {
+		                System.out.println("Error: Insufficient inventory for " + finalInven.getInven_name());
+		               
+		                return 1;
+		            } 
+
+		            // exam 리스트의 inven_amount를 최신화
+		            lists.setInven_amount(updatedAmount);
+
+		            // 최종 결과 확인 (디버깅용 로그)
+		            System.out.println("Updated " + lists.getInven_name() + " Amount: " + updatedAmount);
+		        }
+		    }
+		} 
+		for (InventoryVO lists : exam) { 
+			int r = projectService.reduceInventoryAmount(lists);
+			if (r != 1) {
+		        System.out.println("실패 " );
+		        return 1; // 실패 시 반환
+		        
+		    }
+		}
+		
+		
+		
+		  
+		/*
+		 * productVO.setProduct_name(finalInven.getInven_name());
+		 * 
+		 * projectService.getfindProductNum(productVO); ProductVO Product_num =
+		 * projectService.getfindProductNum(productVO); qc.setPaper_num(pd_num);
+		 * productVO.setProduct_name(finalInven.getInven_name());
+		 * qc.setQc_item_num(Product_num.getProduct_num());
+		 * qc.setQc_quan(finalInven.getInven_amount());
+		 * qc.setQc_writer(member.getMember_name()); qc.setQc_type("plan");
+		 * 
+		 * int result2 = projectService.insertqc(qc);
+		 */
+		
+		
+		productionVO.setPd_num(pd_num);
+		
+		
+		
+		 
+		int pd_check = projectService.setPdCheckUpdate(productionVO);
+		System.out.println("생산 성공");
+		return 2;
+	}
 	
 	
 	
@@ -1296,97 +1356,6 @@ public class ProjectController {
 		return ResponseEntity.ok(recipes);
 	       
 	    }
-
-	 	
-		/* 원본
-		 * @GetMapping("/getInventoryByProductName") public ResponseEntity<InventoryVO>
-		 * getInventoryByProductName(@RequestParam("product_name") String product_name)
-		 * {
-		 * 
-		 * InventoryVO inventory =
-		 * projectService.getInventoryByProductName(product_name);
-		 * 
-		 * return ResponseEntity.ok(inventory); }
-		 */
-		/*
-		 * @ResponseBody
-		 * 
-		 * @PostMapping("getInventoryByProductName") public void
-		 * getInventoryByProductName(@RequestParam Map<String, Object> formData) {
-		 * 
-		 * Map<String, Object> itemData = formData .entrySet() .stream() .filter(entry
-		 * -> entry.getKey().contains("item_name"))
-		 * .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-		 * 
-		 * Optional<Integer> itemMaxNumber = itemData.keySet().stream().filter(key ->
-		 * key.startsWith("item_name")) .map(key ->
-		 * Integer.parseInt(key.replace("item_name", ""))).max(Integer::compareTo);
-		 * 
-		 * int maxCount = itemMaxNumber.orElse(0);
-		 * 
-		 * 
-		 * for (int i = 1; i <= maxCount; i++) { String itemNameKey = "item_name" + i;
-		 * String quantityKey = "quantity" + i;
-		 * 
-		 * String itemName = (String)formData.get(itemNameKey); int quantity =
-		 * Integer.parseInt((String)formData.get(quantityKey));
-		 * 
-		 * int recipe_num = projectService.getRecipeNumByProductName(itemName);
-		 * List<RecipeDetailVO> list =
-		 * projectService.getRecipeDetailListByRecipeNum(recipe_num); int listSize =
-		 * list.size();
-		 * 
-		 * for (int k = 1; k <= listSize; k++) { int Mamount = list.get(k -
-		 * 1).getMaterial_amount(); String Mname = list.get(k - 1).getMaterial_name();
-		 * InventoryVO inventoryVO = new InventoryVO();
-		 * 
-		 * int totalMamount = Mamount * quantity;
-		 * 
-		 * 
-		 * 
-		 * } }
-		 * 
-		 * }
-		 */
-	 
-		/*
-		 * @ResponseBody
-		 * 
-		 * @PostMapping("postFactoryDetail") public int
-		 * postFactoryDetail(@RequestParam("pd_num") int pd_num) {
-		 * 
-		 * 
-		 * List<InventoryVO> inventoryList = projectService.getInventoryList(); String[]
-		 * invenArr = new String[inventoryList.size()];
-		 * 
-		 * int count = 0; for (InventoryVO inventory : inventoryList) { invenArr[count]
-		 * = {inventory.getInven_name(), String.valueOf(getInven_amount())}; count++; }
-		 * 
-		 * ProductionVO productionVO = projectService.getFactoryDetail(pd_num);
-		 * 
-		 * List<ProductionDetailVO> list = projectService.getProductionDetail(pd_num);
-		 * 
-		 * for (ProductionDetailVO production : list) {
-		 * 
-		 * int productionAmount = production.getProductiondetail_amount();
-		 * 
-		 * List<RecipeDetailVO> recipeList = projectService.getRecipeList();
-		 * 
-		 * for (RecipeDetailVO recipe : recipeList) {
-		 * 
-		 * int i = 0; for (i=0; i<inventoryList.size(); i++) { if
-		 * (recipe.getMaterial_name().equals(invenArr[i][0])) { invenArr[i][1] -=
-		 * recipe.getMaterial_amount() * productionAmount; if (invenArr[i][1] < 0) {
-		 * return -1; } //if end } //if end } //for end
-		 * 
-		 * } //for end
-		 * 
-		 * } //for end
-		 * 
-		 * return 1; }
-		 */
-
-	 
 	 
 }
 			

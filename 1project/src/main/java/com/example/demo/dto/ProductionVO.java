@@ -23,4 +23,9 @@ public class ProductionVO {
 	private int productiondetail_num;
 	private String product_name;
 	private int productiondetail_amount;
+	
+	
+	
+	private int black;
+	private int white;
 }

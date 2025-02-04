@@ -113,36 +113,9 @@
 
 
 <script>
-/* // 데이터를 테이블에 렌더링하는 함수
-function renderPlanDetails(details) {
-    const table = document.getElementById("products"); // 테이블 ID 선택
-    const tbody = table.querySelector("tbody") || table;
-	
-    // 데이터 추가
-    details.forEach((detail) => {
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td class="rownum" style="text-align: right; padding-right: 15px;">${detail.count}</td>
-            <td>${detail.plandetail_num}</td>
-            <td class="item_name">${detail.product_name}</td>
-            <td class="quantity">${detail.plandetail_amount}</td>
-        `;
-		
-        tbody.appendChild(row);
-    });
- 
-} */
-
-// DOMContentLoaded 이벤트 핸들러로 실행
-document.addEventListener("DOMContentLoaded", () => {
-    renderPlanDetails(factoryPlanDetails);
-});
-
 
 
 function returnCheck(pd_num) {
-	alert(pd_num);
 	Swal.fire({
 		title: "정말 생산처리 하시겠습니까?",
 		text: "세부 내용들을 다시 한 번 확인해주세요.",
@@ -152,7 +125,7 @@ function returnCheck(pd_num) {
 		cancelButtonColor: "#d33",
 		confirmButtonText: "출고",
 		cancelButtonText: "취소",
-		preconfirm:() => {
+		preConfirm:() => {
 			return {
 				pd_num : pd_num
 			}
@@ -169,7 +142,7 @@ function returnCheck(pd_num) {
 					}else {
 						Swal.fire("성공", "정상적으로 출고처리 되었습니다.", "success")
 						.then(result => {
-							location.reload();
+							window.location.href = 'factoryPlan'; 
 						});
 					}
 				}
@@ -195,33 +168,27 @@ function returnCheck(pd_num) {
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
-				<div class="page-header">
-					<div class="row">
-						<div class="col-md-6 col-sm-12">
-							<div class="title">
-						<h4>DataTable</h4>
-							</div>
-							<nav aria-label="breadcrumb" role="navigation">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
-								</ol>
+						<div class="page-header">
+						<div class="row">
+							<div class="col-md-3 col-sm-9">
+								<div class="pagename">
+									<h4>품질 관리</h4>
+								</div>
+								<nav aria-label="breadcrumb" role="navigation">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+										<li class="breadcrumb-item active" aria-current="page">생산 계획서</li>
+									</ol>
 							</nav>
 						</div>
-						<div class="col-md-6 col-sm-12 text-right">
-								<div class="dt-buttons btn-group flex-wrap">    
-									<button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>CSV</span></button> 
-									<button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>PDF</span></button> 
-									<button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span>Print</span></button>
-								</div>
-							</div>
-						</div>
 					</div>
+				</div>
 				</div>
 				
 				<!-- Export Datatable start -->
 				<div class="card-box mb-30">
-				<div style="padding: 70px;">
+				
+				<div style="padding: 30px;">
 				<div style="border: 1px solid black; width: 1200px; padding: 60px 120px; margin: 0 auto;">
 				<div class="pb-20">
 					
@@ -235,7 +202,7 @@ function returnCheck(pd_num) {
 					        
 						</tr>
 					</table>
-			<form action="postFactoryDetail" method="post">
+			<!-- <form action="postFactoryDetail" method="post"> -->
 					<table class="input-auto-size">
 						
 					    <tr>
@@ -267,7 +234,7 @@ function returnCheck(pd_num) {
 					        <td><th:block th:text="${stat.count}"></th:block></td>
 					        <td class="item_name"><th:block th:id="'item_name' + ${stat.count}" th:name="'item_name'+${stat.count}" th:text="${productiondetailVO.product_name}"></th:block></td>
 					        <td class="quantity"><th:block th:id="'quantity' + ${stat.count}" th:name="'quantity' + ${stat.count}" th:text="${productiondetailVO.productiondetail_amount}"></th:block></td>
-					    	
+					    	<input type="hidden" th:id="pd_num" th:name="pd_num" th:value="${productionVO.pd_num}">
 					    	<input type="hidden" th:id="'item_name' + ${stat.count}" th:name="'item_name'+${stat.count}" th:value="${productiondetailVO.product_name}">
 					    	<input type="hidden" th:id="'quantity' + ${stat.count}" th:name="'quantity' + ${stat.count}" th:value="${productiondetailVO.productiondetail_amount}">
 					    	
@@ -287,15 +254,17 @@ function returnCheck(pd_num) {
 					</table>
 					<div class="col-md-15 col-sm-17 text-right">
 					<br><br>
-						<button  class="btn btn-primary m-2 rowbtn" value="생산" th:onclick="returnCheck([[${productionVO.pd_num}]])">생산</button>
+						<!-- <button  class="btn btn-primary m-2 rowbtn" value="생산" th:onclick="returnCheck([[${productionVO.pd_num}]])">생산</button> -->
+					<button class="btn btn-primary m-2 rowbtn" value="생산"
+  						  
+   						 th:onclick="returnCheck([[${productionVO.pd_num}]])">생산
+   						 <!-- th:if="${member.member_dept == '생산'}" -->
+					</button>
 					</div>
-					</form>
+					<!-- </form> -->
 				</div>
 				</div>
 				</div>
-				
-			
-				
 				<!-- Export Datatable End -->
 			</div>
 			

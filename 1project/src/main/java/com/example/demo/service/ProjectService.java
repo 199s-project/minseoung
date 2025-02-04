@@ -61,7 +61,7 @@ public class ProjectService {
     	}
     	 
     	session.setAttribute("user", member); 
-        mv.setViewName("index");
+        mv.setViewName("redirect:/");
     	
     	return mv;
     }
@@ -669,9 +669,9 @@ public class ProjectService {
 		return projectDAO.getRecipeDetailListByRecipeNum(recipe_num);
 	}
 	
-	public int reduceInventoryAmount(InventoryVO inventoryVO) {
+	public int reduceInventoryAmount(InventoryVO lists) {
 		
-		return projectDAO.reduceInventoryAmount(inventoryVO);
+		return projectDAO.reduceInventoryAmount(lists);
 	}
 
 	public int setPdCheckUpdate(ProductionVO productionVO) {
@@ -734,13 +734,31 @@ public class ProjectService {
 		return projectDAO.getFindRecipeNum(product_name);
 	}
 
-	public List<InventoryVO> getFindInvenList(String product_name) {
+	public List<InventoryVO> getFindInvenList() {
 		// TODO Auto-generated method stub
-		return projectDAO.getFindInvenList(product_name);
+		return projectDAO.getFindInvenList();
 	}
 
 	
+	//0203
+	public Map<String,Object> getPdCheckCounts() {
+		return projectDAO.getPdCheckCounts();
+	}
 
+	public int getPdCheckCount1() {
+		// TODO Auto-generated method stub
+		return projectDAO.getPdCheckCount1();
+	}
+
+	public int getPdCheckCount2() {
+		// TODO Auto-generated method stub
+		return projectDAO.getPdCheckCount2();
+	}
+
+	public List<ProductionVO> getLastProduction() {
+		// TODO Auto-generated method stub
+		return projectDAO.getLastProduction();
+	}
 
 			
 		

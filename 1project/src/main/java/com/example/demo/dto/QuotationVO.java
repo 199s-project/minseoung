@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @Alias("QuotationVO")
 public class QuotationVO {
+	
 	private int quot_num;
 	private String quot_name;
 	private String quot_stat;
@@ -27,6 +28,7 @@ public class QuotationVO {
 	private int quotdetail_price;
 	private int total_price;
 	private String this_num;
+	private String discord;
 	
 	//orderform vo
 	private int orderform_num;

@@ -155,9 +155,10 @@ public interface ProjectDAO {
 	
 	List<RecipeDetailVO> getRecipeDetailListByRecipeNum(int recipe_num);
 	
-	int reduceInventoryAmount(InventoryVO inventoryVO);
+	int reduceInventoryAmount(InventoryVO lists);
 	
-	
+	//0203
+	Map<String,Object> getPdCheckCounts();
 	
 	
 	
@@ -248,7 +249,13 @@ List<ProductionDetailVO> getProductionListByFactoryDetail(int pd_num);
 
 int getFindRecipeNum(String product_name);
 
-List<InventoryVO> getFindInvenList(String product_name);
+List<InventoryVO> getFindInvenList();
+
+int getPdCheckCount1();
+
+int getPdCheckCount2();
+
+List<ProductionVO> getLastProduction();
    
 // new 작업공간 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이의재 끝   
    

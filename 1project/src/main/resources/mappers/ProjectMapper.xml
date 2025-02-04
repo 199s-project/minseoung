@@ -82,22 +82,25 @@
 	</select>	
 	
 	<select id="allFormList" resultType="QuotationVO">
-		SELECT 
-	           *,
-	            concat('quot', quot_num) as this_num
-	            
-	       FROM 
-	           quotation
-	       GROUP BY 
-	           quotation.quot_num
-	      union ALL
-	        SELECT
-	         *,
-	           concat('order', orderform_num) as this_num
-	       FROM 
-	           orderform
-	       GROUP BY 
-	           orderform.orderform_num;
+	SELECT 
+    quotation.*,
+    concat('quot', quotation.quot_num) as this_num,
+    concat('quot', quotation.quot_code) as discord
+		FROM 
+    quotation
+		GROUP BY 
+    quotation.quot_num, quotation.quot_code
+
+	UNION ALL
+
+	SELECT
+    orderform.*,
+    concat('order', orderform.orderform_num) as this_num,
+    concat('order', orderform.orderform_code) as discord
+		FROM 
+    orderform
+		GROUP BY 
+    orderform.orderform_num, orderform.orderform_code;
 	</select>
 	
 
@@ -364,7 +367,9 @@
 	  <!-- 원본 -->
   <update id="reduceInventoryAmount" parameterType="InventoryVO">
    update inventory 
-   set inven_amount = inven_amount - #{inven_amount} where inven_name = #{inven_name} and inven_amount >= #{inven_amount}
+   set inven_amount = #{inven_amount} 
+   where inven_name = #{inven_name} 
+   and inven_amount >= #{inven_amount}
    </update> 
  	
   <update id="setPdCheckUpdate" parameterType="ProductionVO"> 
@@ -409,24 +414,38 @@
 	</select>
 	
 	<!-- ==============================추가분 -->
-	<select id="getProductionListByFactoryDetail" parameterType="ProductionDetailVO">
+	<select id="getProductionListByFactoryDetail" parameterType="int" resultType="ProductionDetailVO">
 	select product_name , productiondetail_amount from productiondetail where
-	pd_num = #{pd_num};
+	pd_num = #{pd_num}
 	</select>
 	
 	<select id="getFindRecipeNum" parameterType="String">
 		select recipe_num from recipe where product_name = #{product_name}	
 	</select>
 	
-	<select id="getFindInvenList" parameterType="ProductionDetailVO">
-		   SELECT * FROM inventory WHERE inven_name IN
-    	<foreach collection="ProductionList" item="product_name" open="(" separator="," close=")">
-      	  #{product_name}
-    	</foreach>
+	<select id="getFindInvenList" parameterType="InventoryVO">
+		   SELECT * FROM inventory
 	</select>
 	
-	
-	
+	<!-- 0203 -->
+    <select id = "getPdCheckCount1" resultType="int">
+    	select 
+    	 count(pd_check) AS black
+    	 from production where pd_check = 1;
+    </select>
+    
+        <select id = "getPdCheckCount2" resultType="int">
+    	select 
+    	 count(pd_check) AS white
+    	 from production where pd_check = 0;
+    </select>
+    
+    <select id="getLastProduction" resultType="ProductionVO">
+    	SELECT * FROM production ORDER BY pd_num DESC limit 5;
+    </select>
+    
+    
+    
 	
 <!-- 김민성 ========================================================================================= -->	
 	
