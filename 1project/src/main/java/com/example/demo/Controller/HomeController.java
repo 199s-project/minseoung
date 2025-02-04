@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.dto.MemberVO;
 import com.example.demo.dto.OrderformVO;
 import com.example.demo.dto.ProductionVO;
 import com.example.demo.service.ProjectService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -28,8 +30,8 @@ public class HomeController {
 	
 	//0203 김민성
 	@GetMapping("/")
-    public String Home(Model model){
-		
+    public String Home(Model model,HttpSession session){
+		MemberVO member = (MemberVO)session.getAttribute("user");
 		
         log.info("Home");
         
