@@ -37,7 +37,7 @@ public class HomeController {
         
         List<ProductionVO> list = projectService.getLastProduction();
         model.addAttribute("list", list); 
-        
+        model.addAttribute(member);
         return "index";
     }
 	

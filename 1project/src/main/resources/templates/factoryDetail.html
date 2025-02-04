@@ -256,9 +256,9 @@ function returnCheck(pd_num) {
 					<br><br>
 						<!-- <button  class="btn btn-primary m-2 rowbtn" value="생산" th:onclick="returnCheck([[${productionVO.pd_num}]])">생산</button> -->
 					<button class="btn btn-primary m-2 rowbtn" value="생산"
-  						  
+  						   th:if="${member.member_grade == '팀장'}"
    						 th:onclick="returnCheck([[${productionVO.pd_num}]])">생산
-   						 <!-- th:if="${member.member_dept == '생산'}" -->
+   						 
 					</button>
 					</div>
 					<!-- </form> -->

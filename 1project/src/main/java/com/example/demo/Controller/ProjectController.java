@@ -1091,7 +1091,7 @@ public class ProjectController {
 			mv.addObject("productionList", productionListVO);
 			mv.addObject("pd_num",pd_num);
 			mv.setViewName("factoryDetail");
-
+			mv.addObject("member",member);
 			return mv;
 		}
 		else {
