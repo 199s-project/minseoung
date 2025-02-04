@@ -1176,7 +1176,7 @@ public class ProjectController {
 	 * 
 	 * return "redirect:factoryPlan"; }
 	 */
-	
+	//0203 김민성
 	@ResponseBody
 	@PostMapping("postFactoryDetail")
 	public int postFactoryDetail(@RequestParam("pd_num")int pd_num,HttpSession session)throws Exception  {
@@ -1318,7 +1318,7 @@ public class ProjectController {
 	
 	
 	
-	 
+	//0203 김민성
 	 @GetMapping("/getInventoryByProductName")
 	    public ResponseEntity<List<RecipeVO>> getInventoryByProductName(@RequestParam("product_name") String product_name,
 	    														  @RequestParam("amount") String amount) {

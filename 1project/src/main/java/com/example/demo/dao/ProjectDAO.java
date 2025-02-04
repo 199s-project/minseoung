@@ -160,6 +160,79 @@ public interface ProjectDAO {
 	//0203
 	Map<String,Object> getPdCheckCounts();
 	
+	 QuotationVO getQuotationByQuotnum(int quot_num);
+	   
+	   CompanyVO getCompanyByCompanynum(int company_num);
+	   
+	   List<QuotationDetailVO> getQuotationDetailListByQuotnum(int quot_num);
+	   
+	   OrderformVO getOrderformByOrderformnum(int orderform_num);
+	   
+	   List<OrderformDetailVO> getOrderformDetailListByOrderformnum(int orderform_num);
+
+	   int materialCodeCheck(String material_code);
+	   
+	   int findMaxMaterialNum();
+	   
+	   int addMaterial(MaterialVO materialVO);
+	   
+	   List<MaterialVO> getMaterialList();
+	   
+	   int materialFileAmount(int material_num);
+	   
+	   FileVO materialFindFirstImage(int material_num);
+	   
+	   MaterialVO getMaterialDetail(int material_num);
+	   
+	   List<FileVO> getMaterialImages(int material_num);
+	   
+	   MaterialVO getMaterialByMaterialName(String product_name);  
+	   
+	   int insertInventoryMaterial (PaymentMaterialVO inventoryMaterialVO);
+	   
+	   int insertqc (QcVO qcVO);
+	   
+	   List<MemberVO> getMemberList();
+	   
+	   MemberVO getMemberByMemberId(String member_id);
+	   
+	   int memberIdValidation(Map<String,Object> map);
+	   
+	   int updateMember(MemberVO memberVO);
+	   
+	   int addMaterialInventory(InventoryVO inventoryVO);
+	   
+	   int addProductInventory(InventoryVO inventoryVO);
+
+	   int setPdCheckUpdate(ProductionVO productionVO);
+
+	   ProductVO getfindProductNum(ProductVO productVO);
+
+	int insertQuotationCode(int quot_num, String code);
+
+	InventoryVO getInventoryByProductName(String product_name);
+
+	List<RecipeDetailVO> getTotalAmount(String product_name);
+
+	List<InventoryVO> getInventoryList();
+
+	List<ProductionDetailVO> getProductionDetail(int pd_num);
+
+	List<RecipeDetailVO> getRecipeList();
+
+	InventoryVO getInvenAmount(String Mname);
+
+	List<ProductionDetailVO> getProductionListByFactoryDetail(int pd_num);
+
+	int getFindRecipeNum(String product_name);
+
+	List<InventoryVO> getFindInvenList();
+
+	int getPdCheckCount1();
+
+	int getPdCheckCount2();
+
+	List<ProductionVO> getLastProduction();
 	
 	
 	// ---------------------김민성---------------------------------	
@@ -183,79 +256,7 @@ public interface ProjectDAO {
 
 // new 작업공간 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이의재 시작
    
-   QuotationVO getQuotationByQuotnum(int quot_num);
-   
-   CompanyVO getCompanyByCompanynum(int company_num);
-   
-   List<QuotationDetailVO> getQuotationDetailListByQuotnum(int quot_num);
-   
-   OrderformVO getOrderformByOrderformnum(int orderform_num);
-   
-   List<OrderformDetailVO> getOrderformDetailListByOrderformnum(int orderform_num);
-
-   int materialCodeCheck(String material_code);
-   
-   int findMaxMaterialNum();
-   
-   int addMaterial(MaterialVO materialVO);
-   
-   List<MaterialVO> getMaterialList();
-   
-   int materialFileAmount(int material_num);
-   
-   FileVO materialFindFirstImage(int material_num);
-   
-   MaterialVO getMaterialDetail(int material_num);
-   
-   List<FileVO> getMaterialImages(int material_num);
-   
-   MaterialVO getMaterialByMaterialName(String product_name);  
-   
-   int insertInventoryMaterial (PaymentMaterialVO inventoryMaterialVO);
-   
-   int insertqc (QcVO qcVO);
-   
-   List<MemberVO> getMemberList();
-   
-   MemberVO getMemberByMemberId(String member_id);
-   
-   int memberIdValidation(Map<String,Object> map);
-   
-   int updateMember(MemberVO memberVO);
-   
-   int addMaterialInventory(InventoryVO inventoryVO);
-   
-   int addProductInventory(InventoryVO inventoryVO);
-
-   int setPdCheckUpdate(ProductionVO productionVO);
-
-   ProductVO getfindProductNum(ProductVO productVO);
-
-int insertQuotationCode(int quot_num, String code);
-
-InventoryVO getInventoryByProductName(String product_name);
-
-List<RecipeDetailVO> getTotalAmount(String product_name);
-
-List<InventoryVO> getInventoryList();
-
-List<ProductionDetailVO> getProductionDetail(int pd_num);
-
-List<RecipeDetailVO> getRecipeList();
-
-InventoryVO getInvenAmount(String Mname);
-
-List<ProductionDetailVO> getProductionListByFactoryDetail(int pd_num);
-
-int getFindRecipeNum(String product_name);
-
-List<InventoryVO> getFindInvenList();
-
-int getPdCheckCount1();
-
-int getPdCheckCount2();
-
-List<ProductionVO> getLastProduction();
+  
    
 // new 작업공간 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이의재 끝   
    

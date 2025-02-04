@@ -24,6 +24,9 @@ public class HomeController {
 	@Autowired
 	private ProjectService projectService;
 	
+	
+	
+	//0203 김민성
 	@GetMapping("/")
     public String Home(Model model){
 		
