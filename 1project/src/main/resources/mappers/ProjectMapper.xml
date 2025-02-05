@@ -81,27 +81,6 @@
 	        quotation.quot_num;
 	</select>	
 	
-	<select id="allFormList" resultType="QuotationVO">
-	SELECT 
-    quotation.*,
-    concat('quot', quotation.quot_num) as this_num,
-    concat('quot', quotation.quot_code) as discord
-		FROM 
-    quotation
-		GROUP BY 
-    quotation.quot_num, quotation.quot_code
-
-	UNION ALL
-
-	SELECT
-    orderform.*,
-    concat('order', orderform.orderform_num) as this_num,
-    concat('order', orderform.orderform_code) as discord
-		FROM 
-    orderform
-		GROUP BY 
-    orderform.orderform_num, orderform.orderform_code;
-	</select>
 	
 
 	
@@ -320,7 +299,28 @@
 
 	
 <!-- 김민성 ========================================================================================= -->
-	
+	<!-- 0204 김민성 -->
+	<select id="allFormList" resultType="QuotationVO">
+	SELECT 
+    quotation.*,
+    concat('quot', quotation.quot_num) as this_num,
+    concat('quot', quotation.quot_code) as discord
+		FROM 
+    quotation
+		GROUP BY 
+    quotation.quot_num, quotation.quot_code
+
+	UNION ALL
+
+	SELECT
+    orderform.*,
+    concat('order', orderform.orderform_num) as this_num,
+    concat('order', orderform.orderform_code) as discord
+		FROM 
+    orderform
+		GROUP BY 
+    orderform.orderform_num, orderform.orderform_code;
+	</select>
 	<select id="getProductionList" resultType="ProductionVO">
 		select * from production;
 	</select>
