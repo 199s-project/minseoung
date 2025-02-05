@@ -770,6 +770,31 @@ public class ProjectService {
 		return projectDAO.getFatoryWorkList1();
 	}
 
+	public int setPdCheckUpdate3(ProductionVO productionVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.setPdCheckUpdate3(productionVO);
+	}
+
+	public int setPdCheckUpdate4(ProductionVO productionVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.setPdCheckUpdate4(productionVO);
+	}
+
+	public List<ProductionVO> getFatoryWorkList2() {
+		// TODO Auto-generated method stub
+		return projectDAO.getFatoryWorkList2();
+	}
+
+	public int setDeleteProduction(ProductionVO productionVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.setDeleteProduction(productionVO);
+	}
+
+	public int setDeleteProduction2(ProductionVO productiondetailVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.setDeleteProduction2(productiondetailVO);
+	}
+
 			
 		
 		

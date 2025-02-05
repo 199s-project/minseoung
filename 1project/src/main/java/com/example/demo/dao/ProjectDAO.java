@@ -234,7 +234,19 @@ public interface ProjectDAO {
 
 	List<ProductionVO> getLastProduction();
 	//0203
+	int setPdCheckUpdate2(ProductionVO productionVO);
+
+	List<ProductionVO> getFatoryWorkList1();
+
+	int setPdCheckUpdate3(ProductionVO productionVO);
 	
+	int setPdCheckUpdate4(ProductionVO productionVO);
+	
+	List<ProductionVO> getFatoryWorkList2();
+	
+	int setDeleteProduction(ProductionVO productionVO);
+	
+	int setDeleteProduction2(ProductionVO productiondetailVO);
 	// ---------------------김민성---------------------------------	
 	
 	
@@ -253,9 +265,15 @@ public interface ProjectDAO {
    
 	List<FileVO> getProductImages(int product_num);
 
-	int setPdCheckUpdate2(ProductionVO productionVO);
+	
 
-	List<ProductionVO> getFatoryWorkList1();
+	
+
+	
+
+	
+
+
 	
 
 // new 작업공간 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이의재 시작

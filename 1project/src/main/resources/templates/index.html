@@ -126,7 +126,7 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
 				<div class="col-xl-8 mb-30">
     <div class="card-box height-100-p pd-20">
         <h2 class="h4 pd-20">최근 작성된 생산 계획서 list5</h2>
-       
+       <!-- 0204 김민성 -->
         <!-- data-table table nowrap bestseller-table -->
         <table class="data-table table nowrap bestseller-table">
             <thead>
@@ -164,6 +164,9 @@ th.sorting, th.table-plus.datatable-nosort.sorting_asc {
     					 </th:block>
     					  <th:block th:if="${list.pd_check == 2}">
    						    <span class="badge badge-warning" th:text="'생산 요청'"></span>
+						  </th:block>
+						  <th:block th:if="${list.pd_check == 99}">
+   						    <span class="badge badge-danger" th:text="'휴지통'"></span>
 						  </th:block>
 						 </td>
              	       </tr>

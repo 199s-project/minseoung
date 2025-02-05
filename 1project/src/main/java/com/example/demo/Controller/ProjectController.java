@@ -1024,19 +1024,8 @@ public class ProjectController {
 		return "allForm";
 	}
 
-	// 생산계획서 목록 화면 이동
-	@GetMapping("productionPlan")
-	public String getproductionPlanList(Model model) {
-		//추가된 부분 
-		
-		List<ProductionVO> list = projectService.getProductionList();
-		model.addAttribute("getProductionPlanList", list);
-		log.info("getProductionPlanList", list);
-		return "productionPlan";
-		
-	
-	}
 
+	//0204 김민성
 	// 생산계획서 폼 이동
 	@GetMapping("productionForm")
 	public String productionForm(HttpSession session,Model model) {
@@ -1046,14 +1035,17 @@ public class ProjectController {
 			return "login";
 		}
 		if("생산".equals(member.getMember_dept())) {
+			List<ProductVO> products = projectService.getProductList();
+			model.addAttribute("product",products);
 			model.addAttribute("member",member);
 			return "productionForm";
 		}
 		else{
 			
 		}
+		List<ProductVO> products = projectService.getProductList();
+		model.addAttribute("product",products);
 		model.addAttribute("member",member);
-		System.out.println(member);
 		log.info("productionForm()");
 		return "productionForm";
 	}
@@ -1076,10 +1068,23 @@ public class ProjectController {
 		List<ProductionVO> list = projectService.getFatoryWorkList1();
 		MemberVO member = (MemberVO)session.getAttribute("user");
 		model.addAttribute("getFatoryWorkList1", list);
-		model.addAttribute(member);
-		log.info("factoryPlan", list);
+		model.addAttribute("member",member);
+		log.info("feedBackList", list);
 		return "feedBackList";
 	}
+	
+	//0204 김민성
+		@GetMapping("productionDeletePage")
+		public String productionDeletePage(Model model,HttpSession session) {
+			List<ProductionVO> list = projectService.getFatoryWorkList2();
+			MemberVO member = (MemberVO)session.getAttribute("user");
+			
+			model.addAttribute("getFatoryWorkList2", list);
+			model.addAttribute("member",member);
+			
+			log.info("productionDeletePage", list);
+			return "productionDeletePage";
+		}
 	
 	//0204김민성
 	@GetMapping("getFactoryDetail")
@@ -1108,82 +1113,21 @@ public class ProjectController {
 		
 	}
 
-	/*
-	 * @PostMapping("postFactoryDetail") public String
-	 * postFactoryDetail(@RequestParam Map<String, Object> formData) { Map<String,
-	 * Object> itemData = formData .entrySet() .stream() .filter(entry ->
-	 * entry.getKey().contains("item_name"))
-	 * .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-	 * 
-	 * Optional<Integer> itemMaxNumber = itemData.keySet().stream().filter(key ->
-	 * key.startsWith("item_name")) .map(key ->
-	 * Integer.parseInt(key.replace("item_name", ""))).max(Integer::compareTo);
-	 * 
-	 * int pd_num =Integer.parseInt((String)formData.get("pd_num")); // pd_num 갖고오기
-	 * 
-	 * int maxCount = itemMaxNumber.orElse(0);
-	 * 
-	 * int num = (int)projectService.getfindLastProductionNumber();
-	 * 
-	 * ProductVO productVO = new ProductVO();
-	 * 
-	 * QcVO qc = new QcVO();
-	 * 
-	 * 
-	 * 
-	 * 
-	 * for (int i = 1; i <= maxCount; i++) { String itemNameKey = "item_name" + i;
-	 * String quantityKey = "quantity" + i;
-	 * 
-	 * String itemName = (String)formData.get(itemNameKey); int quantity =
-	 * Integer.parseInt((String)formData.get(quantityKey)); //qc에 관련한 product_name
-	 * select 해서 product_num 찾기 productVO.setProduct_name(itemName);
-	 * 
-	 * projectService.getfindProductNum(productVO);
-	 * 
-	 * ProductVO product_num = projectService.getfindProductNum(productVO);
-	 * 
-	 * qc.setQc_item_num(product_num.getProduct_num()); qc.setQc_quan(quantity);
-	 * qc.setQc_type("plan"); qc.setPaper_num(num); qc.setQc_writer("test");
-	 * 
-	 * log.info(itemNameKey); log.info(quantityKey); List<InventoryVO> newlist = new
-	 * InventoryVO(); int recipe_num =
-	 * projectService.getRecipeNumByProductName(itemName); List<RecipeDetailVO> list
-	 * = projectService.getRecipeDetailListByRecipeNum(recipe_num); int listSize =
-	 * list.size();
-	 * 
-	 * for (int k = 1; k <= listSize; k++) { int Mamount = list.get(k -
-	 * 1).getMaterial_amount(); String Mname = list.get(k - 1).getMaterial_name();
-	 * InventoryVO inventoryVO = new InventoryVO();
-	 * 
-	 * 
-	 * int totalMamount = Mamount * quantity;
-	 * 
-	 * inventoryVO.setInven_amount(totalMamount); inventoryVO.setInven_name(Mname);
-	 * 
-	 * int r = projectService.reduceInventoryAmount(inventoryVO);
-	 * 
-	 * if (r > 0) { System.out.println("생산되었습니다."); ProductionVO productionVO = new
-	 * ProductionVO(); productionVO.setPd_num(pd_num);
-	 * 
-	 * 
-	 * productVO.setProduct_name(itemName);
-	 * 
-	 * //set 해둔 qc 문 update int result2 = projectService.insertqc(qc);
-	 * 
-	 * int pd_check = projectService.setPdCheckUpdate(productionVO);
-	 * 
-	 * return "redirect:factoryPlan"; } else {
-	 * 
-	 * System.out.println("재고가 부족합니다. 재고를 확인후 생산 계획서를 수정해 주세요.");
-	 * 
-	 * } }
-	 * 
-	 * }
-	 * 
-	 * return "redirect:factoryPlan"; }
-	 */
-	//0203 김민성
+	
+	
+	// 생산계획서 목록 화면 이동
+	@GetMapping("productionPlan")
+	public String getproductionPlanList(Model model) {
+		//추가된 부분 
+		
+		List<ProductionVO> list = projectService.getProductionList();
+		model.addAttribute("getProductionPlanList", list);
+		log.info("getProductionPlanList", list);
+		return "productionPlan";
+		
+	
+	}
+	//0204 김민성
 	@ResponseBody
 	@PostMapping("postFactoryDetail")
 	public int postFactoryDetail(@RequestParam("pd_num")int pd_num,HttpSession session)throws Exception  {
@@ -1193,7 +1137,8 @@ public class ProjectController {
 		QcVO qc = new QcVO();
 		ProductVO productVO = new ProductVO();
 		ProductionVO productionVO = new ProductionVO(); 
-		 
+		
+		
 		List<InventoryVO> FinalInven = new ArrayList<>();
 		InventoryVO inven1 = new InventoryVO();
 		List<ProductionDetailVO> ProductionList = projectService.getProductionListByFactoryDetail(pd_num);
@@ -1262,15 +1207,11 @@ public class ProjectController {
 		        	
 		            // 최신화: exam의 inven_amount에서 FinalInven의 inven_amount를 빼기
 		            int updatedAmount = lists.getInven_amount() - finalInven.getInven_amount(); 
-		            
-		            
 		            // 음수 방지
 		            if (updatedAmount < 0) {
 		                System.out.println("Error: Insufficient inventory for " + finalInven.getInven_name());
-		               
 		                return 1;
 		            } 
-
 		            // exam 리스트의 inven_amount를 최신화
 		            lists.setInven_amount(updatedAmount);
 
@@ -1287,23 +1228,23 @@ public class ProjectController {
 		        
 		    }
 		}
-		
-		
-		
-		  
-		/*
-		 * productVO.setProduct_name(finalInven.getInven_name());
-		 * 
-		 * projectService.getfindProductNum(productVO); ProductVO Product_num =
-		 * projectService.getfindProductNum(productVO); qc.setPaper_num(pd_num);
-		 * productVO.setProduct_name(finalInven.getInven_name());
-		 * qc.setQc_item_num(Product_num.getProduct_num());
-		 * qc.setQc_quan(finalInven.getInven_amount());
-		 * qc.setQc_writer(member.getMember_name()); qc.setQc_type("plan");
-		 * 
-		 * int result2 = projectService.insertqc(qc);
-		 */
-		
+		//qc set 을 해주기 위한 리스트
+		List<ProductionDetailVO> ProductbyQcSet = projectService.getProductionListByFactoryDetail(pd_num);
+		int ProductbyQcSetSize = ProductbyQcSet.size();
+		for(int c =0; c < ProductbyQcSetSize;c++) {
+			String product_name = ProductbyQcSet.get(c).getProduct_name(); 
+			int product_amount = ProductbyQcSet.get(c).getProductiondetail_amount();
+			
+			  productVO.setProduct_name(product_name);
+			  projectService.getfindProductNum(productVO);
+			
+			  ProductVO product_num = projectService.getfindProductNum(productVO);
+			  qc.setQc_item_num(product_num.getProduct_num()); 
+			  qc.setQc_quan(product_amount);
+			  qc.setQc_type("plan"); 
+			  qc.setPaper_num(pd_num);
+			  int result2 = projectService.insertqc(qc);
+		}
 		
 		productionVO.setPd_num(pd_num);
 		
@@ -1326,11 +1267,71 @@ public class ProjectController {
 	return 1;	
 	}
 	
+	//0204 김민성
+	@ResponseBody
+	@PostMapping("postDeleteProduction")
+	public int postDeleteProduction(@RequestParam("pd_num")int pd_num)throws Exception  {
+	ProductionVO productionVO = new ProductionVO();
+	log.info("pd_num {}",pd_num);
 	
+	productionVO.setPd_num(pd_num);
+		
+	int pd_check = projectService.setPdCheckUpdate3(productionVO);
+	//pd_check == 99 가 delete 예정
+	return 1;	
+	}
 	
+	//0204 김민성
+	@ResponseBody
+	@PostMapping("postDeleteProductionBack")
+	public int postDeleteProductionBack(@RequestParam("pd_num")int pd_num)throws Exception  {
+	ProductionVO productionVO = new ProductionVO();
+	log.info("pd_num {}",pd_num);
+		
+	productionVO.setPd_num(pd_num);
+			
+	int pd_check = projectService.setPdCheckUpdate4(productionVO);
+		//pd_check == 0 으로 되돌림
+	return 1;	
+	}
 	
+	//0204 김민성
+	@ResponseBody
+	@PostMapping("postRealDelete")
+	public int postRealDelete(@RequestParam("pd_num")int pd_num)throws Exception  {
+	ProductionVO productionVO = new ProductionVO();
+	ProductionVO productiondetailVO = new ProductionVO();
 	
+	log.info("pd_num {}",pd_num);
+			
+	productionVO.setPd_num(pd_num);
+	productiondetailVO.setPd_num(pd_num);
 	
+	int pd_check2 = projectService.setDeleteProduction2(productiondetailVO); 
+	
+	int pd_check = projectService.setDeleteProduction(productionVO); 
+	
+			//pd_check == 0 으로 되돌림
+	return 1;	
+	}
+	
+	//0204 김민성
+	@ResponseBody
+	@GetMapping("getProductList")
+	public String[] getProductList(Model model) {
+		log.info("controller access");
+		List<ProductVO> ProductList = projectService.getProductList();
+
+		String[] ProductNameList = new String[ProductList.size()];
+		int cnt = 0;
+		for (ProductVO product : ProductList) {
+			ProductNameList[cnt] = product.getProduct_name();
+			cnt++;
+		}
+		model.addAttribute("ProductNameList", ProductNameList);
+
+		return ProductNameList;
+	}
 	
 	
 	

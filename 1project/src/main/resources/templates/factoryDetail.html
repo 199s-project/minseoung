@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>생산 계획서 상세보기</title>
-
+<!-- 0204김민성 -->
 
     
 <style>
@@ -186,6 +186,104 @@ function returnFeedback(pd_num) {
 }
 
 
+function returnDelete(pd_num) {
+	Swal.fire({
+		title: "정말 삭제 하시겠습니까?",
+		text: "삭제하면 다신 대돌릴수 없습니다.",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		confirmButtonText: "삭제",
+		cancelButtonText: "취소",
+		preConfirm:() => {
+			return {
+				pd_num : pd_num
+			}
+		}
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				type: "POST",
+				url: "/postDeleteProduction",
+				data: {pd_num : pd_num},
+				success: function(cnt) {
+					if (cnt == 1) {
+						Swal.fire("삭제", "생산 계획서가 삭제 되었습니다.", "success");
+						window.location.href = 'feedBackList'; 
+					}
+				}
+			});
+		}
+	});
+}
+
+function returnDeleteBack(pd_num) {
+	Swal.fire({
+		title: "정말 복구 하시겠습니까?",
+		text: "복구 하시면 다시 계획서 리스트로 복귀합니다.",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		confirmButtonText: "복구",
+		cancelButtonText: "취소",
+		preConfirm:() => {
+			return {
+				pd_num : pd_num
+			}
+		}
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				type: "POST",
+				url: "/postDeleteProductionBack",
+				data: {pd_num : pd_num},
+				success: function(cnt) {
+					if (cnt == 1) {
+						Swal.fire("복구", "생산 계획서가 복구 되었습니다.", "success");
+						window.location.href = 'productionDeletePage'; 
+					}
+				}
+			});
+		}
+	});
+}
+
+
+function returnRealDelete(pd_num) {
+	Swal.fire({
+		title: "정말 삭제 하시겠습니까?",
+		text: "삭제 하시면 되돌릴 수 없습니다.",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		confirmButtonText: "삭제",
+		cancelButtonText: "취소",
+		preConfirm:() => {
+			return {
+				pd_num : pd_num
+			}
+		}
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				type: "POST",
+				url: "/postRealDelete",
+				data: {pd_num : pd_num},
+				success: function(cnt) {
+					if (cnt == 1) {
+						Swal.fire("삭제", "생산 계획서가 삭제 되었습니다.", "success");
+						window.location.href = 'productionDeletePage'; 
+					}
+				}
+			});
+		}
+	});
+}
+
+
 </script>
 
 
@@ -285,12 +383,24 @@ function returnFeedback(pd_num) {
 					<br><br>
 						<!-- <button  class="btn btn-primary m-2 rowbtn" value="생산" th:onclick="returnCheck([[${productionVO.pd_num}]])">생산</button> -->
 					<button class="btn btn-primary m-2 rowbtn" value="생산"
-  						   th:if="${member.member_grade == '팀장' and productionVO.pd_check == 0}"
+  						   th:if="${member.member_grade == '팀장' and (productionVO.pd_check == 0 or productionVO.pd_check == 2)}"
    						 th:onclick="returnCheck([[${productionVO.pd_num}]])">생산
 					</button>
-					<button class="btn btn-primary m-2 rowbtn" value="생산"
-  						   th:if="${member.member_grade == '사원' and productionVO.pd_check == 0}"
+					<button class="btn btn-success m-2 rowbtn" value="요청"
+  						   th:if="${member.member_grade == '사원' and productionVO.pd_check == 0 and member.member_grade != null}"
    						 th:onclick="returnFeedback([[${productionVO.pd_num}]])">요청
+					</button>
+					<button class="btn btn-warning m-2 rowbtn" value="삭제"
+  						   th:if="${member.member_grade == '팀장' and productionVO.pd_check == 2 and member.member_grade != null}"
+   						 th:onclick="returnDelete([[${productionVO.pd_num}]])">삭제
+					</button>
+					<button class="btn btn-warning m-2 rowbtn" value="복귀"
+  						   th:if="${productionVO.pd_check == 99 and member.member_grade != null}"
+   						 th:onclick="returnDeleteBack([[${productionVO.pd_num}]])">복귀
+					</button>
+					<button class="btn btn-danger m-2 rowbtn" value="삭제"
+  						   th:if="${member.member_grade == '팀장' and productionVO.pd_check == 99 and member.member_grade != null}"
+   						 th:onclick="returnRealDelete([[${productionVO.pd_num}]])">삭제
 					</button>
 					</div>
 					<!-- </form> -->
@@ -300,10 +410,10 @@ function returnFeedback(pd_num) {
 				<!-- Export Datatable End -->
 			</div>
 			
-			<script th:if="${errorMessage != null}">
+			<!-- <script th:if="${errorMessage != null}">
    			 alert([[${errorMessage}]]);
    			 window.location.href = "/";
-			</script>
+			</script> -->
 			
 			
 			
