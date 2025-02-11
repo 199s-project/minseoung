@@ -382,27 +382,27 @@ function returnRealDelete(pd_num) {
 					<div class="col-md-15 col-sm-17 text-right">
 					<br><br>
 						<!-- <button  class="btn btn-primary m-2 rowbtn" value="생산" th:onclick="returnCheck([[${productionVO.pd_num}]])">생산</button> -->
-					<button class="btn btn-primary m-2 rowbtn" value="생산"
-  						   th:if="${member.member_grade == '팀장' and (productionVO.pd_check == 0 or productionVO.pd_check == 2)}"
-   						 th:onclick="returnCheck([[${productionVO.pd_num}]])">생산
-					</button>
-					<button class="btn btn-success m-2 rowbtn" value="요청"
-  						   th:if="${member.member_grade == '사원' and productionVO.pd_check == 0 and member.member_grade != null}"
-   						 th:onclick="returnFeedback([[${productionVO.pd_num}]])">요청
-					</button>
-					<button class="btn btn-warning m-2 rowbtn" value="삭제"
-  						   th:if="${member.member_grade == '팀장' and productionVO.pd_check == 2 and member.member_grade != null}"
-   						 th:onclick="returnDelete([[${productionVO.pd_num}]])">삭제
-					</button>
-					<button class="btn btn-warning m-2 rowbtn" value="복귀"
-  						   th:if="${productionVO.pd_check == 99 and member.member_grade != null}"
-   						 th:onclick="returnDeleteBack([[${productionVO.pd_num}]])">복귀
-					</button>
-					<button class="btn btn-danger m-2 rowbtn" value="삭제"
-  						   th:if="${member.member_grade == '팀장' and productionVO.pd_check == 99 and member.member_grade != null}"
-   						 th:onclick="returnRealDelete([[${productionVO.pd_num}]])">삭제
-					</button>
-					</div>
+							<button class="btn btn-primary m-2 rowbtn" value="생산"
+								th:if="${member.member_dept =='생산' and member.member_grade == '팀장' and (productionVO.pd_check == 0 or productionVO.pd_check == 2)}"
+								th:onclick="returnCheck([[${productionVO.pd_num}]])">생산
+							</button>
+							<button class="btn btn-success m-2 rowbtn" value="요청"
+								th:if="${member.member_dept =='생산' and member.member_grade == '사원' and productionVO.pd_check == 0 and member.member_grade != null}"
+								th:onclick="returnFeedback([[${productionVO.pd_num}]])">요청
+							</button>
+							<button class="btn btn-warning m-2 rowbtn" value="삭제"
+								th:if="${member.member_dept =='생산' and member.member_grade == '팀장' and productionVO.pd_check == 2 and member.member_grade != null}"
+								th:onclick="returnDelete([[${productionVO.pd_num}]])">삭제
+							</button>
+							<button class="btn btn-warning m-2 rowbtn" value="복귀"
+								th:if="${member.member_dept =='생산' and productionVO.pd_check == 99 and member.member_grade != null}"
+								th:onclick="returnDeleteBack([[${productionVO.pd_num}]])">복귀
+							</button>
+							<button class="btn btn-danger m-2 rowbtn" value="삭제"
+								th:if="${member.member_dept =='생산' and member.member_grade == '팀장' and productionVO.pd_check == 99 and member.member_grade != null}"
+								th:onclick="returnRealDelete([[${productionVO.pd_num}]])">삭제
+							</button>
+						</div>
 					<!-- </form> -->
 				</div>
 				</div>
@@ -420,7 +420,7 @@ function returnRealDelete(pd_num) {
 			
 			
 			<div class="footer-wrap pd-20 mb-20 card-box">
-				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
+				we are all 1995's  <a href="" target="_blank">Suit</a>
 			</div>
 		</div>
 	</div>

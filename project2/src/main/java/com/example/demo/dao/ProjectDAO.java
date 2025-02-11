@@ -142,10 +142,9 @@ public interface ProjectDAO {
 	int getMaterialPrice(int inven_item_num);
 	
 	ProductionVO getProductionByPapernum(int paper_num);
-	
-	// 박나현이 김민성 부분 합치다가 추가한 것. 시작 -----------------------------------------------
 	int insertProductionDetail(ProductionDetailVO pdd);
-
+	// 박나현이 김민성 부분 합치다가 추가한 것. 시작 -----------------------------------------------
+	
 	
 	// 박나현이 김민성 부분 합치다가 추가한 것. 끝 -----------------------------------------------
 	
@@ -154,6 +153,12 @@ public interface ProjectDAO {
 	List<QcDashVO> QcMDashTop5();
 	
 	List<QcDashVO> QcPDashTop5();
+	
+	// 25-02-05 재업로드 pd_check = 2
+	int ReinsertProduction(ProductionVO productionVO);
+	
+	String getOrderformCode(int orderform_num);
+	
 	
 	// 나현. 끝.
 
@@ -214,42 +219,88 @@ public interface ProjectDAO {
 	
 	// ---------------------김민성---------------------------------
 	
-	List<ProductionVO> getProductionList();
-
+List<ProductionVO> getProductionList();
+	
 	List<ProductionVO> getFatoryWorkList();
-
-	int insertProductiondetail(List<ProductionDetailVO> list);
 
 	int insertProduction(ProductionVO productionVO);
 
 	int getfindLastProductionNumber();
 
+	
+
 	List<ProductionVO> getFactoryDetailList(int pd_num);
 
-	int insertproductiondetail(List<ProductionDetailVO> list);
+	int setproductionForm(List<ProductionDetailVO> list);
 
 	ProductionVO getFactoryDetail(int pd_num);
-
+	
 	int getRecipeNumByProductName(String product_name);
-
+	
 	List<RecipeDetailVO> getRecipeDetailListByRecipeNum(int recipe_num);
-
+	
 	int reduceInventoryAmount(InventoryVO lists);
+	
+	//0203
+	Map<String,Object> getPdCheckCounts();
+	
+	 QuotationVO getQuotationByQuotnum(int quot_num);
+	   
+	   CompanyVO getCompanyByCompanynum(int company_num);
+	   
+	   List<QuotationDetailVO> getQuotationDetailListByQuotnum(int quot_num);
+	   
+	   OrderformVO getOrderformByOrderformnum(int orderform_num);
+	   
+	   List<OrderformDetailVO> getOrderformDetailListByOrderformnum(int orderform_num);
 
-	// 0203
-	Map<String, Object> getPdCheckCounts();
+	   int materialCodeCheck(String material_code);
+	   
+	   int findMaxMaterialNum();
+	   
+	   int addMaterial(MaterialVO materialVO);
+	   
+	   List<MaterialVO> getMaterialList();
+	   
+	   int materialFileAmount(int material_num);
+	   
+	   FileVO materialFindFirstImage(int material_num);
+	   
+	   MaterialVO getMaterialDetail(int material_num);
+	   
+	   List<FileVO> getMaterialImages(int material_num);
+	   
+	   MaterialVO getMaterialByMaterialName(String product_name);  
+	   
+	   int insertInventoryMaterial (PaymentMaterialVO inventoryMaterialVO);
+	   
+	   int insertqc (QcVO qcVO);
+	   
+	   List<MemberVO> getMemberList();
+	   
+	   MemberVO getMemberByMemberId(String member_id);
+	   
+	   int memberIdValidation(Map<String,Object> map);
+	   
+	   int updateMember(MemberVO memberVO);
+	   
+	   int addMaterialInventory(InventoryVO inventoryVO);
+	   
+	   int addProductInventory(InventoryVO inventoryVO);
 
-	int insertInventoryMaterial(PaymentMaterialVO inventoryMaterialVO);
+	   int setPdCheckUpdate(ProductionVO productionVO);
 
-	int setPdCheckUpdate(ProductionVO productionVO);
+	   ProductVO getfindProductNum(ProductVO productVO);
 
-	ProductVO getfindProductNum(ProductVO productVO);
 
 	InventoryVO getInventoryByProductName(String product_name);
 
 	List<RecipeDetailVO> getTotalAmount(String product_name);
 
+
 	List<ProductionDetailVO> getProductionDetail(int pd_num);
+
+	List<RecipeDetailVO> getRecipeList();
 
 	InventoryVO getInvenAmount(String Mname);
 
@@ -264,20 +315,19 @@ public interface ProjectDAO {
 	int getPdCheckCount2();
 
 	List<ProductionVO> getLastProduction();
-
-	// 0203
+	//0203
 	int setPdCheckUpdate2(ProductionVO productionVO);
 
 	List<ProductionVO> getFatoryWorkList1();
 
 	int setPdCheckUpdate3(ProductionVO productionVO);
-
+	
 	int setPdCheckUpdate4(ProductionVO productionVO);
-
+	
 	List<ProductionVO> getFatoryWorkList2();
-
+	
 	int setDeleteProduction(ProductionVO productionVO);
-
+	
 	int setDeleteProduction2(ProductionVO productiondetailVO);
 	
 	// ---------------------김민성---------------------------------	
@@ -301,47 +351,6 @@ public interface ProjectDAO {
 
 // new 작업공간 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이의재 시작
    
-   QuotationVO getQuotationByQuotnum(int quot_num);
-   
-   CompanyVO getCompanyByCompanynum(int company_num);
-   
-   List<QuotationDetailVO> getQuotationDetailListByQuotnum(int quot_num);
-   
-   OrderformVO getOrderformByOrderformnum(int orderform_num);
-   
-   List<OrderformDetailVO> getOrderformDetailListByOrderformnum(int orderform_num);
-
-   int materialCodeCheck(String material_code);
-   
-   int findMaxMaterialNum();
-   
-   int addMaterial(MaterialVO materialVO);
-   
-   List<MaterialVO> getMaterialList();
-   
-   int materialFileAmount(int material_num);
-   
-   FileVO materialFindFirstImage(int material_num);
-   
-   MaterialVO getMaterialDetail(int material_num);
-   
-   List<FileVO> getMaterialImages(int material_num);
-   
-   MaterialVO getMaterialByMaterialName(String product_name);  
-   
-   int insertqc (QcVO qcVO);
-   
-   List<MemberVO> getMemberList();
-   
-   MemberVO getMemberByMemberId(String member_id);
-   
-   int memberIdValidation(Map<String,Object> map);
-   
-   int updateMember(MemberVO memberVO);
-   
-   int addMaterialInventory(InventoryVO inventoryVO);
-   
-   int addProductInventory(InventoryVO inventoryVO);
    
    int productNameCheck(String product_name);
    
@@ -355,7 +364,7 @@ public interface ProjectDAO {
    
    int recipeProductCodeCheck(String product_code);
    
-   List<RecipeVO> getRecipeList();
+   List<RecipeVO> getRecipeList1();
    
    int getProductNumByProductCode(String product_code);
    
